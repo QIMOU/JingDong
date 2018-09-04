@@ -13,9 +13,8 @@
         android:layout_height="match_parent"
         app:tab_selected_color="#f00"
         app:tab_unselected_color="#cccccc"
-        app:tab_img_font_padding="5dp"
-        app:tab_padding_top="-3dp"
-        app:tab_padding_bottom="-3dp"
+        app:tab_padding_top="-7px"
+        app:tab_padding_bottom="-7px"
         />
 
 

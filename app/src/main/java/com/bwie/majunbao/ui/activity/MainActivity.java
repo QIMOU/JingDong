@@ -32,7 +32,16 @@ public class MainActivity extends BaseActivity {
                 .addTabItem("", R.drawable.selected_drawable_find, ClassFragment.class)
                 .addTabItem("", R.drawable.selected_drawable_class, FindFragment.class)
                 .addTabItem("", R.drawable.selected_drawable_cart, CartFragment.class)
-                .addTabItem("", R.drawable.selected_drawable_my, MyFragment.class);
+                .addTabItem("", R.drawable.selected_drawable_my, MyFragment.class)
+                //.isShowDivider(false)
+                .setOnTabChangeListener(new BottomTabBar.OnTabChangeListener() {
+                    @Override
+                    public void onTabChange(int position, String name, View view) {
+                        if (position == 1) {
+                            mBottomTabBar.setSpot(1, false);
+                        }
+                    }
+                });
     }
 
     @Override

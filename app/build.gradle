@@ -31,6 +31,11 @@ dependencies {
     //butterknife
     implementation 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-    //仿fragment和radiogroup机制,实现fragment,控件bottomtabbar
-    implementation 'com.hjm:BottomTabBar:1.0.0'
+    //仿fragment和radiogroup机制,实现fragment,控件bottomtabbar,最新版本1.2.2
+    implementation 'com.hjm:BottomTabBar:1.2.2'
+    //SmartRefreshLayout实现上拉加载,下拉刷新的,2依赖
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'//没有使用特殊Header，可以不加这行
+    //recyclerview实现展示列表的
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
 }
