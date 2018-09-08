@@ -1,0 +1,44 @@
+<LinearLayout android:layout_marginTop="30dp"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="top"
+    android:layout_alignParentTop="true"
+    android:id="@+id/llSearch"
+    >
+    <ImageView
+        android:id="@+id/sao"
+        android:src="@drawable/bjj"
+        android:layout_width="30dp"
+        android:layout_gravity="center"
+        android:layout_height="30dp"
+        android:background="@drawable/home_search_yuan"
+        />
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_marginLeft="20dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:layout_gravity="center"
+        android:text="搜索千万商品"
+        android:id="@+id/tv_home"
+        android:textSize="20dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/home_search_tvhome"
+        />
+</LinearLayout>
+
+    <ImageView
+        android:layout_marginLeft="20dp"
+        android:id="@+id/xx_home"
+        android:layout_width="30dp"
+        android:layout_gravity="center"
+        android:src="@drawable/bmr"
+        android:background="@drawable/home_search_yuan"
+        android:layout_height="30dp" />
+</LinearLayout>

@@ -1,14 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.MyFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.MyFragment"
+    android:orientation="vertical">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:id="@+id/myfragmentbg"
+    android:background="@drawable/mybackground1"
+    >
+    <LinearLayout
+        android:layout_marginTop="25dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+        android:layout_height="25dp"
+        android:gravity="right"
+        android:id="@+id/ll1"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/agd"
+            android:id="@+id/shezhi"
+            android:layout_marginRight="10dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/aga"
+            android:id="@+id/duihua"
+            android:layout_marginRight="10dp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/ll1"
+        android:orientation="horizontal"
+        >
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="13dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/touxiang"
+            fresco:roundAsCircle="true"
+            fresco:placeholderImage="@drawable/bg7"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="登录/注册>"
+                android:textColor="#ffff"
+                android:textSize="16sp"
+                android:layout_marginTop="15dp"
+                android:id="@+id/login"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
+</LinearLayout>

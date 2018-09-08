@@ -1,4 +1,4 @@
-package com.bwie.majunbao.base;
+package majunbao.bwie.com.jingdong_base_marster.base.base_ui;
 
 import android.app.Activity;
 import android.content.Context;

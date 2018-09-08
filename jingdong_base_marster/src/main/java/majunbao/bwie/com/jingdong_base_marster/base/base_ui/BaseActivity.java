@@ -1,4 +1,4 @@
-package com.bwie.majunbao.base;
+package majunbao.bwie.com.jingdong_base_marster.base.base_ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -29,6 +29,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(setLayoutId());
         //绑定控件
         unbinder = ButterKnife.bind(this);
+        //性能优化
+
         //初始化沉浸式
         if (isImmersionBarEnabled())
             initImmersionBar();
@@ -38,7 +40,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         initView();
         //设置监听
         setListener();
+
     }
+
 
     @Override
     protected void onDestroy() {
@@ -47,6 +51,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         this.imm = null;
         if (mImmersionBar != null)
             mImmersionBar.destroy();  //在BaseActivity里销毁
+
     }
 
     protected abstract int setLayoutId();

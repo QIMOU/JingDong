@@ -1,14 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.CartFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="购物车" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/smart_mian"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srlEnablePreviewInEditMode="true">
+
+            <com.bwie.majunbao.weiget.MyCartRefreshHeader
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></com.bwie.majunbao.weiget.MyCartRefreshHeader>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@mipmap/jd_buy_icon" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/my_recy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <CheckBox
+            android:id="@+id/allCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/totalPriceTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/allCheckbox"
+            android:text="总价:" />
+
+        <Button
+            android:id="@+id/buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="去结算" />
+    </RelativeLayout>
+
+</RelativeLayout>

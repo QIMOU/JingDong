@@ -28,13 +28,6 @@ public class MyRefreshHeader extends LinearLayout implements RefreshHeader {
      * 开始刷新
      * 结束刷新
      */
-    public static final int STATE_RESET = -1;
-    public static final int STATE_PREPARE = 0;
-    public static final int STATE_BEGIN = 1;
-    public static final int STATE_FINISH = 2;
-
-    public static final int MARGIN_RIGHT = 100;
-
 
     private ImageView mImage;
     private AnimationDrawable refreshingAnim;
