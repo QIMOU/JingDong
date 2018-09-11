@@ -25,13 +25,13 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
 
     private Context context;
     private List<CartEntity.DataBean.ListBean> listBeanList;
+    private  List<CartEntity.DataBean> listbean;
 
-
-    public MyCartProductAdapter(Context context, List<CartEntity.DataBean.ListBean> listBeanList) {
+    public MyCartProductAdapter(Context context, List<CartEntity.DataBean.ListBean> listBeanList, List<CartEntity.DataBean> listbean) {
         this.context = context;
         this.listBeanList = listBeanList;
+        this.listbean = listbean;
     }
-
 
     @NonNull
     @Override
@@ -42,7 +42,7 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final CartViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final CartViewHolder holder, final int position) {
         final CartEntity.DataBean.ListBean bean = listBeanList.get(position);
         holder.titleTv.setText(bean.getTitle());
         holder.priceTv.setText(bean.getPrice());
@@ -60,6 +60,14 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
             public void onClick(View view) {
                 if (holder.checkBox.isChecked()) {//选中
                     bean.setSelected(true);
+                    for (int i = 0; i <listBeanList.size() ; i++) {
+                        if (bean.isSelected()) {
+                            listbean.get(i).setSelected(true);
+                        }else {
+                            listbean.get(i).setSelected(false);
+                        }
+                    }
+
                 } else {//非选中
                     bean.setSelected(false);
                 }

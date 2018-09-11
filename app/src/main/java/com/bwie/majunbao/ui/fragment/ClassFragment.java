@@ -1,14 +1,16 @@
 package com.bwie.majunbao.ui.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,11 +20,9 @@ import com.bwie.majunbao.contract.FenLeiContract;
 import com.bwie.majunbao.entity.FenLeiEntity;
 import com.bwie.majunbao.entity.LeftFenLeiEntity;
 import com.bwie.majunbao.presenter.FenLeiPresenter;
+import com.bwie.majunbao.ui.activity.LiuShiActivity;
 import com.bwie.majunbao.ui.adapter.LeftAdapter;
 import com.bwie.majunbao.ui.adapter.RightAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +39,14 @@ public class ClassFragment extends BaseMvpFragment<FenLeiContract.FenLeiModel, F
     @BindView(R.id.lv_home)
     ListView lvHome;
     Unbinder unbinder;
+    @BindView(R.id.sao)
+    ImageView sao;
+    @BindView(R.id.tv_home)
+    TextView tvHome;
+    @BindView(R.id.xx_home)
+    ImageView xxHome;
+    @BindView(R.id.llSearch)
+    LinearLayout llSearch;
     private RightAdapter mRightAdapter;
     private LeftAdapter mLeftAdapter;
     private String cid;
@@ -63,6 +71,14 @@ public class ClassFragment extends BaseMvpFragment<FenLeiContract.FenLeiModel, F
         super.initView();
         presenter.leftClass();
         presenter.rightClass(cid);
+        //搜索框
+        tvHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //跳转到搜索页面
+                startActivity(new Intent(getActivity(),LiuShiActivity.class));
+            }
+        });
     }
 
     @Override
@@ -72,8 +88,8 @@ public class ClassFragment extends BaseMvpFragment<FenLeiContract.FenLeiModel, F
 
     @Override
     public void lsuccess(final LeftFenLeiEntity leftFenLeiEntity) {
-        Log.i("aaa","左分类成功");
-        Log.i("aaa","做分类"+leftFenLeiEntity.getMsg());
+        Log.i("aaa", "左分类成功");
+        Log.i("aaa", "做分类" + leftFenLeiEntity.getMsg());
         //左边展示
         mLeftAdapter = new LeftAdapter(getActivity(), leftFenLeiEntity.getData());
         lvMenu.setAdapter(mLeftAdapter);
@@ -88,7 +104,6 @@ public class ClassFragment extends BaseMvpFragment<FenLeiContract.FenLeiModel, F
                 //Toast.makeText(mActivity, leftFenLeiEntity.getData().get(i).getName(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     @Override

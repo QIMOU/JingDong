@@ -7,7 +7,7 @@
     tools:context=".ui.fragment.ClassFragment">
 
 
-    <LinearLayout android:layout_marginTop="15dp"
+    <LinearLayout android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="30dp"
@@ -18,11 +18,11 @@
         >
         <ImageView
             android:id="@+id/sao"
-            android:src="@drawable/bjj"
+            android:src="@drawable/sao"
             android:layout_width="30dp"
             android:layout_gravity="center"
             android:layout_height="30dp"
-            android:background="@drawable/home_search_yuan"
+            android:padding="3dp"
             />
         <LinearLayout
             android:layout_width="0dp"
@@ -50,8 +50,8 @@
             android:id="@+id/xx_home"
             android:layout_width="30dp"
             android:layout_gravity="center"
-            android:src="@drawable/bmr"
-            android:background="@drawable/home_search_yuan"
+            android:src="@drawable/home_xiaoxi"
+            android:padding="3dp"
             android:layout_height="30dp" />
     </LinearLayout>
 

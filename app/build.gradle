@@ -19,57 +19,92 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:support-v4:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
     //沉浸式
     implementation 'com.gyf.immersionbar:immersionbar:2.3.1'
+
     //butterknife
     implementation 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+
     //仿fragment和radiogroup机制,实现fragment,控件bottomtabbar,最新版本1.2.2
     implementation 'com.hjm:BottomTabBar:1.2.2'
+
     //SmartRefreshLayout实现上拉加载,下拉刷新的,2依赖
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'//没有使用特殊Header，可以不加这行
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
+
+    //没有使用特殊Header，可以不加这行
+
     //recyclerview实现展示列表的
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+
     //gson数据解析器
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+
     //retrofit核心库
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+
     //rxjava,回调适配器
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
     //rxandroid，切换到主线程，响应式编程
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
     //banner
-    implementation 'com.youth.banner:banner:1.4.10'  //最新版本
+    implementation 'com.youth.banner:banner:1.4.10'
+
+    //最新版本
+
     //自己写的model
     implementation project(path: ':jingdong_base_marster')
+
     //图片fresco
     implementation 'com.facebook.fresco:fresco:0.14.1'
+
     //下面的依赖根据需求,用到哪个模块,就导入对应的依赖即可.
+
     // 仅支持 WebP 静态图，需要添加
+
     //implementation 'com.facebook.fresco:webpsupport:0.14.1'
+
     // 支持 GIF 动图，需要添加
     implementation 'com.facebook.fresco:animated-gif:0.14.1'
+
     // 支持 WebP 静态图及 WebP 动图，需要添加
+
     //implementation 'com.facebook.fresco:animated-webp:0.14.1'
+
     //implementation 'com.facebook.fresco:webpsupport:0.14.1'
+
     // 在 API < 14 上的机器支持 WebP 时，需要添加
+
     //implementation 'com.facebook.fresco:animated-base-support:0.14.1'
+
     //2.沉浸式
+
     // implementation 'com.jaeger.statusbarutil:library:1.5.1'
+
     //Glide图片加载框架
     implementation 'com.github.bumptech.glide:glide:4.7.1'
+
     //跑马灯
     implementation 'com.sunfusheng:marqueeview:1.+'
+
     //eventbus
     implementation 'org.greenrobot:eventbus:3.0.0'
+
     //多样Toast
     implementation 'com.sdsmdg.tastytoast:tastytoast:0.1.1'
+
+    //流式布局
+    implementation 'com.github.LRH1993:AutoFlowLayout:1.+'
+
 }

@@ -125,9 +125,15 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
         mSmartMian.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+               // allCheckbox.setChecked(false);
+                mMyCartAdapter.notifyDataSetChanged();
+                //再次网络请求
+                presenter.showCart("17415");
+                //allCheckbox.setSelected(false);
+                notiCheckbox();
+               // mMyCartAdapter.notifyDataSetChanged();
                 //停止刷新
                 refreshlayout.finishRefresh();
-
             }
         });
         //加载更多
@@ -196,16 +202,8 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event3(NotifyCart str) {
         System.out.println("=======1");
-//        mMyCartAdapter.notifyDataSetChanged();
         notiCheckbox();
     }
-//    //处理事件
-//    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-//    public void Event4(String str2) {
-//        System.out.println("=======2");
-//        mMyCartAdapter.notifyDataSetChanged();
-//
-//    }
 
     @Override
     public void onDestroyView() {

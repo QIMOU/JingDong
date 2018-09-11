@@ -49,7 +49,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.CartViewHo
         holder.nameTv.setText(bean.getSellerName());
         holder.checkbox.setChecked(bean.isSelected());
         holder.productXRY.setLayoutManager(new LinearLayoutManager(context));
-        MyCartProductAdapter myCartProductAdapter = new MyCartProductAdapter(context, bean.getList());
+        MyCartProductAdapter myCartProductAdapter = new MyCartProductAdapter(context, bean.getList(),cartlist);
         holder.productXRY.setAdapter(myCartProductAdapter);
 
 
@@ -57,14 +57,17 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.CartViewHo
         for (int i = 0; i < bean.getList().size(); i++) {
             if (!bean.getList().get(i).isSelected()){
                 holder.checkbox.setChecked(false);
-                //bean.setSelected(false);
                 break;//跳出循环
             }else if (bean.getList().get(i).isSelected()){
                 holder.checkbox.setChecked(true);
+                for (int j = 0; j < bean.getList().size(); j++) {
+                    if (bean.getList().get(j).isSelected()) {
+                        bean.setSelected(true);
+                    }
+                }
                 //bean.setSelected(true);
             }
         }
-
 
         //设置商家的checkbox点击事件，逻辑：勾选则子列表全部勾选，取消则全部取消
         holder.checkbox.setOnClickListener(new View.OnClickListener() {

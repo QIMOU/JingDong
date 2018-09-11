@@ -42,6 +42,7 @@
         android:layout_width="30dp"
         android:layout_gravity="center"
         android:src="@drawable/bmr"
+        android:padding="6dp"
         android:background="@drawable/home_search_yuan"
         android:layout_height="30dp" />
 </LinearLayout>

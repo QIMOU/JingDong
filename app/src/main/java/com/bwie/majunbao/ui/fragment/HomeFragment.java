@@ -25,6 +25,7 @@ import com.bwie.majunbao.contract.ProductContract;
 import com.bwie.majunbao.entity.ProductEntity;
 import com.bwie.majunbao.presenter.ProductPresenter;
 import com.bwie.majunbao.ui.activity.HomeBannerClickActivity;
+import com.bwie.majunbao.ui.activity.LiuShiActivity;
 import com.bwie.majunbao.ui.adapter.HomeFragmentAdapter;
 import com.gyf.barlibrary.ImmersionBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -42,7 +43,7 @@ import majunbao.bwie.com.jingdong_base_marster.base.mvp.IBasePresenter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends BaseMvpFragment<ProductContract.ProductModel, ProductContract.ProductPresenter> implements ProductContract.IProductView {
+public class HomeFragment extends BaseMvpFragment<ProductContract.ProductModel, ProductContract.ProductPresenter> implements ProductContract.IProductView, View.OnClickListener {
     @BindView(R.id.home_recy)
     RecyclerView home_recy;
     @BindView(R.id.smart_mian)
@@ -88,6 +89,7 @@ public class HomeFragment extends BaseMvpFragment<ProductContract.ProductModel, 
         home_recy.setLayoutManager(new LinearLayoutManager(getActivity()));
         //设置recyclerview下滑搜索栏
         setHomeRecysearch();
+        tvHome.setOnClickListener(this);
     }
 
     private void setHomeRecysearch() {
@@ -225,5 +227,11 @@ public class HomeFragment extends BaseMvpFragment<ProductContract.ProductModel, 
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    //搜索的点击事件
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(getActivity(),LiuShiActivity.class));
     }
 }

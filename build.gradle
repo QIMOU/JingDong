@@ -19,6 +19,8 @@ allprojects {
     repositories {
         google()
         jcenter()
+        //流式布局
+        maven { url 'https://jitpack.io' }
     }
 }
 

@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 网络权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 写入权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 网络动态监听 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!-- 读取权限 -->
     <application
@@ -31,7 +34,8 @@
         <activity android:name=".ui.activity.XiangQingActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.RegistActivity" />
-        <activity android:name=".ui.activity.SetUserActivity"></activity>
+        <activity android:name=".ui.activity.SetUserActivity" />
+        <activity android:name=".ui.activity.LiuShiActivity"></activity>
     </application>
 
 </manifest>
