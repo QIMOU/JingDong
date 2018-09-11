@@ -1,7 +1,7 @@
-<LinearLayout android:layout_marginTop="30dp"
+<LinearLayout android:layout_marginTop="20dp"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="45dp"
+    android:layout_height="40dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_gravity="top"
     android:layout_alignParentTop="true"
@@ -25,11 +25,14 @@
         android:layout_weight="1"
         android:clickable="true"
         android:layout_gravity="center"
-        android:text="搜索千万商品"
+        android:hint="搜索千万商品"
+        android:gravity="center"
         android:id="@+id/tv_home"
         android:textSize="20dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/home_search_tvhome"
+        android:background="@drawable/suosuo"
+        android:drawableLeft="@drawable/a_4"
+        android:drawableRight="@drawable/root"
         />
 </LinearLayout>
 

@@ -30,8 +30,8 @@ public class MainActivity extends BaseActivity {
         mBottomTabBar
                 .setFontSize(0)//设置文字大小
                 .addTabItem("", R.drawable.selected_drawable_home, HomeFragment.class)
-                .addTabItem("", R.drawable.selected_drawable_find, ClassFragment.class)
-                .addTabItem("", R.drawable.selected_drawable_class, FindFragment.class)
+                .addTabItem("", R.drawable.selected_drawable_find, FindFragment.class)
+                .addTabItem("", R.drawable.selected_drawable_class, ClassFragment.class)
                 .addTabItem("", R.drawable.selected_drawable_cart, CartFragment.class)
                 .addTabItem("", R.drawable.selected_drawable_my, MyFragment.class)
                 .isShowDivider(false)

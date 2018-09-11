@@ -20,12 +20,17 @@ import android.widget.Toast;
 import com.bwie.majunbao.R;
 import com.bwie.majunbao.contract.CartContract;
 import com.bwie.majunbao.entity.CartEntity;
+import com.bwie.majunbao.eventbus.NotifyCart;
 import com.bwie.majunbao.presenter.CartPresenter;
 import com.bwie.majunbao.ui.adapter.MyCartAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -57,15 +62,53 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
         }
     };
     private MyCartAdapter mMyCartAdapter;
+    private List<CartEntity.DataBean> mList;
 
 
     @Override
     protected void initView() {
         super.initView();
+        EventBus.getDefault().register(this);
         /*设置刷新控件*/
         setSmartRefresh();
         //网络请求
         presenter.showCart("17415");
+        //设置checkbox的点击事件
+        setCheckboxClick();
+    }
+
+    private void setCheckboxClick() {
+        //设置全选按钮的监听
+        allCheckbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (allCheckbox.isChecked()) {
+                    if (mList!=null&&mList.size()>0) {
+                        for (int i = 0; i < mList.size(); i++) {
+                            mList.get(i).setSelected(true);
+                            for (int j = 0; j < mList.get(i).getList().size(); j++) {
+                                mList.get(i).getList().get(j).setSelected(true);
+                            }
+                        }
+                    }
+                }else {
+                    if (mList!=null&&mList.size()>0) {
+                        for (int i = 0; i < mList.size(); i++) {
+                            mList.get(i).setSelected(false);
+                            for (int j = 0; j < mList.get(i).getList().size(); j++) {
+                                mList.get(i).getList().get(j).setSelected(false);
+                            }
+                        }
+                    }
+                }
+
+                mMyCartAdapter.notifyDataSetChanged();//全部刷新
+
+                // TODO: 2018/9/8 计算总价
+               // totalPrice();
+            }
+
+        });
     }
 
     /*设置刷新控件*/
@@ -102,11 +145,12 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
         Log.i("cart", "成功");
         //if (cartEntity != null && cartEntity.getData() != null) {
             Log.i("cart", "123");
-            List<CartEntity.DataBean> list = cartEntity.getData();
+             mList = cartEntity.getData();
             my_recy.setLayoutManager(new LinearLayoutManager(getActivity()));
-            mMyCartAdapter = new MyCartAdapter(getActivity(), list);
+            mMyCartAdapter = new MyCartAdapter(getActivity(), mList);
             my_recy.setAdapter(mMyCartAdapter);
         //}
+
 
     }
 
@@ -148,9 +192,53 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
         return rootView;
     }
 
+    //处理事件
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event3(NotifyCart str) {
+        System.out.println("=======1");
+//        mMyCartAdapter.notifyDataSetChanged();
+        notiCheckbox();
+    }
+//    //处理事件
+//    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+//    public void Event4(String str2) {
+//        System.out.println("=======2");
+//        mMyCartAdapter.notifyDataSetChanged();
+//
+//    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
+    }
+
+    //通知刷新checbox
+    public void notiCheckbox(){
+        Log.i("notiCheckbox","notiCheckbox");
+        StringBuilder stringBuilder = new StringBuilder();
+        if (mMyCartAdapter != null) {
+            for (int i = 0; i < mMyCartAdapter.getCartList().size(); i++) {
+                 stringBuilder.append(mMyCartAdapter.getCartList().get(i).isSelected());
+        for (int i1 = 0; i1 < mMyCartAdapter.getCartList().get(i).getList().size(); i1++) {
+            stringBuilder.append(mMyCartAdapter.getCartList().get(i).getList().get(i1).isSelected());
+        }
+    }
+}
+
+        System.out.println("sb=====" + stringBuilder.toString());
+
+        //truetruefalsetruefalse
+
+        if (stringBuilder.toString().contains("false")) {
+            allCheckbox.setChecked(false);
+//            totalPrice = 0;
+        } else {
+            allCheckbox.setChecked(true);
+        }
+
+        // TODO: 2018/9/8 计算总价
+        //totalPrice();//计算总价
     }
 }

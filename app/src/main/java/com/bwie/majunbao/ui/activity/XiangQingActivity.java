@@ -76,9 +76,11 @@ public class XiangQingActivity extends BaseActivity {
 
 
     public void detailsCar(View view) {
+
     }
 
     public void detailsAddcar(View view) {
+
     }
 
     @Override

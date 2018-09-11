@@ -73,10 +73,9 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.LoginModel,Logi
         super.initData();
         EventBus.getDefault().register(this);
         //存储信息sp
-      /*  mSp = getSharedPreferences("userlogin", MODE_PRIVATE);
-        mFlag = mSp.getBoolean("flag", false);
+        mSp = getSharedPreferences("login", MODE_PRIVATE);
         mEditor = mSp.edit();
-
+/*
         if (!mFlag){
 
         }else{
@@ -111,6 +110,8 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.LoginModel,Logi
             String headPic = userEntity.getResult().getUserInfo().getHeadPic();
             //手机号
             String Phone = userEntity.getResult().getUserInfo().getPhone();
+            mEditor.putString("nickName",nickName).commit();
+            mEditor.putString("nickName",nickName).commit();
             //hashmap把上面的值存起来
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("nickName",nickName);

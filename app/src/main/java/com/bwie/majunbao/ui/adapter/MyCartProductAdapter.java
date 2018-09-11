@@ -13,6 +13,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bwie.majunbao.R;
 import com.bwie.majunbao.entity.CartEntity;
+import com.bwie.majunbao.eventbus.NotifaCartAdapter;
+import com.bwie.majunbao.eventbus.NotifyCart;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -21,24 +25,13 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
 
     private Context context;
     private List<CartEntity.DataBean.ListBean> listBeanList;
-    //private CartAllCheckListener cartAllCheckListener;
-    //private CartCheckListener checkListener;
+
 
     public MyCartProductAdapter(Context context, List<CartEntity.DataBean.ListBean> listBeanList) {
         this.context = context;
         this.listBeanList = listBeanList;
     }
 
-
-    /*暴露给调用者进行回调*/
-
-   /* public void setCartAllCheckListener(CartAllCheckListener cartAllCheckListener) {
-        this.cartAllCheckListener = cartAllCheckListener;
-    }
-
-    public void setCheckListener(CartCheckListener checkListener) {
-        this.checkListener = checkListener;
-    }*/
 
     @NonNull
     @Override
@@ -49,22 +42,8 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
-        CartEntity.DataBean.ListBean bean = listBeanList.get(position);
-        holder.titleTv.setText(bean.getTitle());
-        holder.priceTv.setText(bean.getPrice());
-       // holder.checkBox.setChecked(bean.isSelected());
-        String[] images = bean.getImages().split("\\|");
-        if (images!=null&&images.length>0) {
-            Glide.with(context).load(images[0]).into(holder.productIv);
-        }else {
-            holder.productIv.setImageResource(R.mipmap.ic_launcher_round);
-        }
-    }
-
-   /* @Override
-    public void onBindViewHolder(@NonNull final ProductAdapter.CartViewHolder holder, int position) {
-        final CartBean.DataBean.ListBean bean = listBeanList.get(position);
+    public void onBindViewHolder(@NonNull final CartViewHolder holder, int position) {
+        final CartEntity.DataBean.ListBean bean = listBeanList.get(position);
         holder.titleTv.setText(bean.getTitle());
         holder.priceTv.setText(bean.getPrice());
         holder.checkBox.setChecked(bean.isSelected());
@@ -75,25 +54,25 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
             holder.productIv.setImageResource(R.mipmap.ic_launcher_round);
         }
 
-        // TODO: 2018/8/24 加减器
-       *//* holder.checkBox.setOnClickListener(new View.OnClickListener() {
+        //点击checkbox
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (holder.checkBox.isChecked()) {
+                if (holder.checkBox.isChecked()) {//选中
                     bean.setSelected(true);
-                }else {
+                } else {//非选中
                     bean.setSelected(false);
                 }
-                if (checkListener!=null) {
-                    checkListener.notifyParent();
-                }
+                //发送事件通知
+                EventBus.getDefault().post(new NotifaCartAdapter());
             }
-        });*//*
-    }*/
+        });
+    }
+
 
     @Override
     public int getItemCount() {
-        return listBeanList.size()==0?0:listBeanList.size();
+        return listBeanList==null?0:listBeanList.size();
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder {

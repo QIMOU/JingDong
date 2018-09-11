@@ -49,7 +49,8 @@ public class MySetUserAdapter extends RecyclerView.Adapter<MySetUserAdapter.MyVi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TastyToast.makeText(context, list.get(position), TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                //TastyToast.makeText(context, list.get(position), TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                Toast.makeText(context,list.get(position), Toast.LENGTH_SHORT).show();
                 if (list.get(position).equals("退出登录")) {
                     HashMap<String, String> hashMap = new HashMap<>();
                     hashMap.put("nickName","2");
