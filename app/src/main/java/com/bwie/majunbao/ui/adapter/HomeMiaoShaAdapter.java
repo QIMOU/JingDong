@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -75,8 +76,7 @@ public class HomeMiaoShaAdapter extends RecyclerView.Adapter<HomeMiaoShaAdapter.
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context,XiangQingActivity.class);
-                intent.putExtra("pid",list.get(position).getPid());
-                intent.putExtra("miaosha_url",list.get(position).getDetailUrl());
+                intent.putExtra("pid",list.get(position).getPid()+"");
                 context.startActivity(intent);
             }
         });

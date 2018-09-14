@@ -85,18 +85,16 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
                 if (allCheckbox.isChecked()) {
                     if (mList!=null&&mList.size()>0) {
                         for (int i = 0; i < mList.size(); i++) {
-                            mList.get(i).setSelected(true);
-                            for (int j = 0; j < mList.get(i).getList().size(); j++) {
-                                mList.get(i).getList().get(j).setSelected(true);
+                            for (int i1 = 0; i1 < mList.get(i).getList().size(); i1++) {
+                                mList.get(i).getList().get(i1).setSelected(1);//真
                             }
                         }
                     }
                 }else {
                     if (mList!=null&&mList.size()>0) {
                         for (int i = 0; i < mList.size(); i++) {
-                            mList.get(i).setSelected(false);
-                            for (int j = 0; j < mList.get(i).getList().size(); j++) {
-                                mList.get(i).getList().get(j).setSelected(false);
+                            for (int i1 = 0; i1 < mList.get(i).getList().size(); i1++) {
+                                mList.get(i).getList().get(i1).setSelected(0);//假
                             }
                         }
                     }
@@ -214,7 +212,41 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
 
     //通知刷新checbox
     public void notiCheckbox(){
-        Log.i("notiCheckbox","notiCheckbox");
+
+        StringBuilder stringBuilder = new StringBuilder();
+        if (mMyCartAdapter != null) {
+            for (int i = 0; i < mMyCartAdapter.getCartList().size(); i++) {
+                for (int i1 = 0; i1 < mMyCartAdapter.getCartList().get(i).getList().size(); i1++) {
+                    stringBuilder.append(mMyCartAdapter.getCartList().get(i).getList().get(i1).getSelected()==0?false:true);
+                }
+            }
+        }
+
+        System.out.println("sb=====" + stringBuilder.toString());
+
+        if (stringBuilder.toString().contains("false")) {
+            allCheckbox.setChecked(false);
+//            totalPrice = 0;
+        } else {
+            allCheckbox.setChecked(true);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     /*   Log.i("notiCheckbox","notiCheckbox");
         StringBuilder stringBuilder = new StringBuilder();
         if (mMyCartAdapter != null) {
             for (int i = 0; i < mMyCartAdapter.getCartList().size(); i++) {
@@ -227,15 +259,13 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
 
         System.out.println("sb=====" + stringBuilder.toString());
 
-        //truetruefalsetruefalse
-
         if (stringBuilder.toString().contains("false")) {
             allCheckbox.setChecked(false);
 //            totalPrice = 0;
         } else {
             allCheckbox.setChecked(true);
         }
-
+*/
         // TODO: 2018/9/8 计算总价
         //totalPrice();//计算总价
     }

@@ -68,4 +68,10 @@
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/my"
+        android:id="@+id/my_xiamian"
+        />
 </LinearLayout>

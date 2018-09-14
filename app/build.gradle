@@ -1,11 +1,19 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword '123456'
+            storeFile file('D:/map.jks')
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.bwie.majunbao"
-        minSdkVersion 15
-        targetSdkVersion 27
+        minSdkVersion 16
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -107,4 +115,28 @@ dependencies {
     //流式布局
     implementation 'com.github.LRH1993:AutoFlowLayout:1.+'
 
+    //今日头条屏幕适配
+    /* implementation 'me.jessyan:autosize:0.9.1'*/
+
+    //侧滑recyclerview实现删除
+    implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
+
+    //相册,相机,裁剪
+    api 'com.jph.takephoto:takephoto_library:4.+'
+
+    //popwindow
+    //implementation 'com.example.zhouwei.library:library:1.0.0'
+    //Dialog
+    implementation 'com.orhanobut:dialogplus:1.11@aar'
 }
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '27.1.1'
+            }
+        }
+    }
+}
+

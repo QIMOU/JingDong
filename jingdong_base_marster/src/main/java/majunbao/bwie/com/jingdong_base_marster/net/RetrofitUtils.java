@@ -34,10 +34,11 @@ public class RetrofitUtils {
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         okHttpClient = new OkHttpClient.Builder()
-                .writeTimeout(2,TimeUnit.SECONDS)//写入超时时间
-                .readTimeout(2,TimeUnit.SECONDS)//读取超时时间
-                .connectTimeout(2,TimeUnit.SECONDS)//超时时间
                 .addInterceptor(httpLoggingInterceptor)//设置日志拦截器
+                .writeTimeout(5,TimeUnit.SECONDS)//写入超时时间
+                .readTimeout(5,TimeUnit.SECONDS)//读取超时时间
+                .connectTimeout(5,TimeUnit.SECONDS)//超时时间
+               // .addInterceptor(new HeaderInterceptor())//头部拦截器
                 .build();
     }
     //retrofit-rxjava-rxandroid

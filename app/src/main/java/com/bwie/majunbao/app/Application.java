@@ -1,7 +1,10 @@
 package com.bwie.majunbao.app;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-public class Application extends android.app.Application {
+
+import majunbao.bwie.com.jingdong_base_marster.base.BaseApp;
+
+public class Application extends BaseApp {
     @Override
     public void onCreate() {
         super.onCreate();

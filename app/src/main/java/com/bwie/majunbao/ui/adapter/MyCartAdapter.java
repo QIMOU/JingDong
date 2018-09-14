@@ -15,6 +15,7 @@ import com.bwie.majunbao.R;
 import com.bwie.majunbao.entity.CartEntity;
 import com.bwie.majunbao.eventbus.NotifaCartAdapter;
 import com.bwie.majunbao.eventbus.NotifyCart;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -47,49 +48,37 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.CartViewHo
         Log.i("cart","asd");
         final CartEntity.DataBean bean = cartlist.get(position);
         holder.nameTv.setText(bean.getSellerName());
-        holder.checkbox.setChecked(bean.isSelected());
+        //holder.checkbox.setChecked(bean.isSelected());
+        for (int i = 0; i < bean.getList().size(); i++) {
+            if (bean.getList().get(i).getSelected()==0) {//假
+                holder.checkbox.setChecked(false);
+                break;
+            }else if(bean.getList().get(i).getSelected()==1){//真
+                holder.checkbox.setChecked(true);
+            }
+        }
+
         holder.productXRY.setLayoutManager(new LinearLayoutManager(context));
         MyCartProductAdapter myCartProductAdapter = new MyCartProductAdapter(context, bean.getList(),cartlist);
         holder.productXRY.setAdapter(myCartProductAdapter);
+        //长安删除
 
-
-        //循环判断集合的长度,判断里面,哪个selected是选中状态
-        for (int i = 0; i < bean.getList().size(); i++) {
-            if (!bean.getList().get(i).isSelected()){
-                holder.checkbox.setChecked(false);
-                break;//跳出循环
-            }else if (bean.getList().get(i).isSelected()){
-                holder.checkbox.setChecked(true);
-                for (int j = 0; j < bean.getList().size(); j++) {
-                    if (bean.getList().get(j).isSelected()) {
-                        bean.setSelected(true);
-                    }
-                }
-                //bean.setSelected(true);
-            }
-        }
 
         //设置商家的checkbox点击事件，逻辑：勾选则子列表全部勾选，取消则全部取消
         holder.checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (holder.checkbox.isChecked()){
-                    //holder.checkbox.setChecked(true);
-                    bean.setSelected(true);
-                    for (int i = 0; i < bean.getList().size(); i++) {
-                        bean.getList().get(i).setSelected(true);
-                    }
-                }else{
-                    //holder.checkbox.setChecked(false);
-                    bean.setSelected(false);
-                    for (int i = 0; i < bean.getList().size(); i++) {
-                        bean.getList().get(i).setSelected(false);
+                for (int i = 0; i < bean.getList().size(); i++) {
+                    if (holder.checkbox.isChecked()) {
+                        bean.getList().get(i).setSelected(1);//真
+                    }else {
+                        bean.getList().get(i).setSelected(0);//假
                     }
                 }
                 notifyDataSetChanged();
                 //发送事件
                 EventBus.getDefault().post(new NotifyCart());
+
             }
         });
 
@@ -110,7 +99,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.CartViewHo
 
         private  CheckBox checkbox;
         private  TextView nameTv;
-        private  RecyclerView productXRY;
+        private SwipeMenuRecyclerView productXRY;
 
         public CartViewHolder(View itemView) {
             super(itemView);

@@ -31,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/setziliao"
         >
         <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="70dp"

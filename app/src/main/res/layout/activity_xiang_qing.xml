@@ -1,36 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_marginTop="30dp"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".ui.activity.XiangQingActivity">
-<WebView
-    android:id="@+id/web_view"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-</WebView>
-<LinearLayout
-    android:layout_alignParentBottom="true"
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:layout_gravity="bottom"
-    android:orientation="horizontal"
-    >
-    <Button
-        android:onClick="detailsCar"
-        android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.XiangQingActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9">
+       <ImageView
+           android:layout_marginTop="20dp"
+           android:layout_width="match_parent"
+           android:layout_height="45dp"
+            android:background="@drawable/a"
+           />
+        <com.youth.banner.Banner
+            android:id="@+id/detail_banner"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"></com.youth.banner.Banner>
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/detail_price"
+            android:textColor="#f00"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="#000"
+            android:layout_marginTop="10dp"
+            android:id="@+id/detail_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/b"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_height="60dp"
-        android:background="#FF9600"
-        android:text="进入购物车"/>
-    <Button
-        android:onClick="detailsAddcar"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="60dp"
-        android:background="#FFFF0004"
-        android:text="加入购物车"/>
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="6"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/xia"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/c" />
+        </LinearLayout>
+        <Button
+            android:onClick="detailsAddcar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="#f00"
+            android:gravity="center"
+            android:text="加入购物车"
+            android:textColor="@color/white" />
+    </LinearLayout>
 </LinearLayout>
-</RelativeLayout>

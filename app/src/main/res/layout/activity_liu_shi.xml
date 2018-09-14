@@ -18,6 +18,12 @@ tools:context=".ui.activity.LiuShiActivity">
         android:layout_weight="0.1"
         android:gravity="center_vertical"
         >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/a_4"
+            android:id="@+id/sousuo"
+            />
         <EditText
             android:id="@+id/edit_one"
             android:layout_width="0dp"
@@ -30,7 +36,6 @@ tools:context=".ui.activity.LiuShiActivity">
             android:gravity="center"
             android:textSize="20dp"
             android:background="@drawable/suosuo"
-            android:drawableLeft="@drawable/a_4"
             android:drawableRight="@drawable/root"
             />
     </LinearLayout>
@@ -64,10 +69,16 @@ tools:context=".ui.activity.LiuShiActivity">
             android:text="热搜"
             />
     </LinearLayout>
-    <com.example.library.AutoFlowLayout
-        android:id="@+id/one_autoFlowLayout2"
+    <HorizontalScrollView
+        android:scrollbars="none"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <com.example.library.AutoFlowLayout
+            android:id="@+id/one_autoFlowLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </HorizontalScrollView>
+
 </LinearLayout>
 <View
     android:layout_width="match_parent"
@@ -91,7 +102,6 @@ tools:context=".ui.activity.LiuShiActivity">
 </LinearLayout>
 <com.example.library.AutoFlowLayout
     android:id="@+id/one_autoFlowLayout"
-
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
 </LinearLayout>

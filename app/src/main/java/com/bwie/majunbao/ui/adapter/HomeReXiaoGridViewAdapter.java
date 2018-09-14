@@ -74,14 +74,11 @@ class HomeReXiaoGridViewAdapter extends RecyclerView.Adapter<HomeReXiaoGridViewA
             @Override
             public void onClick(View view) {
                 mTuijianBeanList.getList().get(position).getTitle();
-                String miaosha_url=mListBeanX.getDetailUrl();
                 Log.i("bbb",mTuijianBeanList.getList().get(position).getTitle());
-                if(miaosha_url!=null){
-                    //EventBus.getDefault().postSticky(miaosha_url);
                     Intent intent = new Intent(context, XiangQingActivity.class);
-                    intent.putExtra("miaosha_url",mTuijianBeanList.getList().get(position).getDetailUrl());
+                    intent.putExtra("pid",mTuijianBeanList.getList().get(position).getPid()+"");
+                    Log.i("aaa",mTuijianBeanList.getList().get(position).getPid()+"");
                     context.startActivity(intent);
-                }
             }
         });
     }

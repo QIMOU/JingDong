@@ -25,9 +25,14 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="#999999"/>
-    <android.support.v7.widget.RecyclerView
+    <!--<android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/productXRV"
-        ></android.support.v7.widget.RecyclerView>
+        ></android.support.v7.widget.RecyclerView>-->
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/productXRV"
+        ></com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView>
 </LinearLayout>

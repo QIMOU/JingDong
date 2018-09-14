@@ -7,4 +7,8 @@ public class Constants {
     public static String BASE_DEBUG_URL="http://120.27.23.105/";//测试服
     //登陆
     public static final String BASE_url="http://172.17.8.100/movieApi/";
+    //发现
+    public static final String FAXIAN_URL="https://www.apiopen.top/";
+
+    //https://www.apiopen.top/satinApi?type=1&page=1
 }

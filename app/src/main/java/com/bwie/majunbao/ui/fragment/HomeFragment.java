@@ -144,7 +144,9 @@ public class HomeFragment extends BaseMvpFragment<ProductContract.ProductModel, 
                 //停止刷新
                 refreshlayout.finishRefresh();
 
-                homeFragmentAdapter.notifyDataSetChanged();
+                if (homeFragmentAdapter!=null) {
+                    homeFragmentAdapter.notifyDataSetChanged();
+                }
             }
         });
         //加载更多
@@ -164,8 +166,8 @@ public class HomeFragment extends BaseMvpFragment<ProductContract.ProductModel, 
      */
     @Override
     public void success(final ProductEntity productEntity) {
-        Log.i("aaa", "成功");
-        Log.i("aaa", productEntity.getMsg());
+       /* Log.i("aaa", "成功");
+        Log.i("aaa", productEntity.getMsg());*/
         //适配器
         homeFragmentAdapter = new HomeFragmentAdapter(getActivity(), productEntity);
         //设置适配器
@@ -176,8 +178,8 @@ public class HomeFragment extends BaseMvpFragment<ProductContract.ProductModel, 
             @Override
             public void onItemClick(int position) {
                 //  Log.i("click","点击了么?");
+                // TODO: 2018/9/12 没写玩详情
                 Intent intent = new Intent(getActivity(), HomeBannerClickActivity.class);
-                Log.i("aaa", "轮播url" + productEntity.getData().getBanner().get(position).getUrl());
                 intent.putExtra("banner_url", productEntity.getData().getBanner().get(position).getUrl());
                 startActivity(intent);
             }
