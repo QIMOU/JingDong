@@ -109,12 +109,10 @@ public class SetUserActivity extends AppCompatActivity {
     //接收UploadIconEventbus,并处理事件
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void Event(UploadIconEventBus uploadIconEventBus) {
-        Log.i("mjb",uploadIconEventBus.headIcon+"aaaa"+uploadIconEventBus.nickName+"aaaa"+uploadIconEventBus.Phone);
-        if (uploadIconEventBus.headIcon!=null&&uploadIconEventBus.nickName!=null&&uploadIconEventBus.Phone!=null) {
+        Log.i("mjb",uploadIconEventBus.headIcon);
+        if (uploadIconEventBus.headIcon!=null) {
             Log.i("mjb","执行了uoload处理事件");
-            textName.setText(uploadIconEventBus.nickName);//给昵称赋值
             imgTou.setImageURI(Uri.parse(uploadIconEventBus.headIcon));//给头像赋值
-            textUser.setText("用户名:" + uploadIconEventBus.Phone);//给账号赋值
         }
     }
 }

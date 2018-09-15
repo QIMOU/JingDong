@@ -40,18 +40,13 @@ public class LiuShiActivity extends AppCompatActivity implements View.OnClickLis
         setListen();
         //创建集合
         ArrayList<String> list = new ArrayList<>();
-        list.add("洗头皂");
-        list.add("乳酸");
-        list.add("隐形耳机超小");
-        list.add("美涛");
-        list.add("马俊宝");
-      /*  for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             if (i % 2 == 0) {
                 list.add("xxx");
             } else {
                 list.add("马俊宝");
             }
-        }*/
+        }
         //设置方法
         setAutoLayout(list, true);
         oneAutoFlowLayout.setOnItemClickListener(new AutoFlowLayout.OnItemClickListener() {

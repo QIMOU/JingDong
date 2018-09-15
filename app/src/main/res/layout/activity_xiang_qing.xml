@@ -34,11 +34,11 @@
             android:id="@+id/detail_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <ImageView
+       <!-- <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/b"
-            />
+            />-->
 
     </LinearLayout>
 
@@ -48,7 +48,7 @@
         android:layout_weight="1"
         android:orientation="horizontal">
 
-        <LinearLayout
+       <!-- <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
@@ -60,12 +60,21 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/c" />
-        </LinearLayout>
+        </LinearLayout>-->
+        <Button
+            android:onClick="detailsoponcar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#00f"
+            android:gravity="center"
+            android:text="进入购物车"
+            android:textColor="@color/white" />
         <Button
             android:onClick="detailsAddcar"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="1"
             android:background="#f00"
             android:gravity="center"
             android:text="加入购物车"

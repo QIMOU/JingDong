@@ -1,14 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'key0'
-            keyPassword '123456'
-            storeFile file('D:/map.jks')
-            storePassword '123456'
-        }
-    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.bwie.majunbao"
@@ -22,6 +14,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFile 'D:/map.jks'
         }
     }
 }
@@ -116,6 +109,7 @@ dependencies {
     implementation 'com.github.LRH1993:AutoFlowLayout:1.+'
 
     //今日头条屏幕适配
+
     /* implementation 'me.jessyan:autosize:0.9.1'*/
 
     //侧滑recyclerview实现删除
@@ -125,7 +119,9 @@ dependencies {
     api 'com.jph.takephoto:takephoto_library:4.+'
 
     //popwindow
+
     //implementation 'com.example.zhouwei.library:library:1.0.0'
+
     //Dialog
     implementation 'com.orhanobut:dialogplus:1.11@aar'
 }

@@ -5,11 +5,14 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,10 +23,12 @@ import com.bwie.majunbao.R;
 import com.bwie.majunbao.api.UserApi;
 import com.bwie.majunbao.common.Constants;
 import com.bwie.majunbao.contract.LoginContract;
+import com.bwie.majunbao.contract.UploadContract;
 import com.bwie.majunbao.entity.UploadIconEntity;
 import com.bwie.majunbao.entity.UserEntity;
 import com.bwie.majunbao.eventbus.UploadIconEventBus;
 import com.bwie.majunbao.model.LoginModel;
+import com.bwie.majunbao.presenter.UploadPresenter;
 import com.bwie.majunbao.utils.EncryptUtil;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
@@ -33,6 +38,9 @@ import com.orhanobut.dialogplus.ViewHolder;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -46,7 +54,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class SetZiLiaoActivity extends BaseMvpActivity<LoginContract.LoginModel, LoginContract.LoginPresenter> implements LoginContract.ILoginView, View.OnClickListener {
+public class SetZiLiaoActivity extends BaseMvpActivity<UploadContract.UploadModel, UploadContract.UploadPresenter> implements UploadContract.IUploadView, View.OnClickListener {
 
 
     @BindView(R.id.back)
@@ -79,6 +87,17 @@ public class SetZiLiaoActivity extends BaseMvpActivity<LoginContract.LoginModel,
     private String mSessionId;
     private SharedPreferences loginSp;
     private Bitmap mBitmap;
+    private static final String TAG = "RxPermissionsSample";
+
+    //相册请求码
+    private static final int ALBUM_REQUEST_CODE = 1;
+    //相机请求码
+    private static final int CAMERA_REQUEST_CODE = 2;
+    //剪裁请求码
+    private static final int CROP_REQUEST_CODE = 3;
+
+    //调用照相机返回图片文件
+    private File tempFile;
 
     @Override
     protected int setLayoutId() {
@@ -88,8 +107,6 @@ public class SetZiLiaoActivity extends BaseMvpActivity<LoginContract.LoginModel,
     @Override
     protected void initData() {
         super.initData();
-        //设置默认存储位置以及名字
-        file = new File(Environment.getExternalStorageDirectory() + "/1603b.png");
         //得到loginsp存的值
         loginSp = getSharedPreferences("login", Context.MODE_PRIVATE);
         String nickName = loginSp.getString("nickName", "");//昵称
@@ -116,7 +133,7 @@ public class SetZiLiaoActivity extends BaseMvpActivity<LoginContract.LoginModel,
     @Override
     protected void initView() {
         super.initView();
-        file = new File(Environment.getExternalStorageDirectory() + "/1603.png");
+        //file = new File(Environment.getExternalStorageDirectory() + "/1603.png");
         //点击事件
         touxiang.setOnClickListener(this);
         username.setOnClickListener(this);
@@ -153,18 +170,13 @@ public class SetZiLiaoActivity extends BaseMvpActivity<LoginContract.LoginModel,
                                         break;
                                         //调用相机
                                     case R.id.xiangji:
-                                        Toast.makeText(SetZiLiaoActivity.this, "相机", Toast.LENGTH_SHORT).show();
-                                        //打开相机 MediaStore.ACTION_IMAGE_CAPTURE 打开相机的Action
-                                        Intent it = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                        //在Sdcard 中创建文件 存入图片
-                                        it.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-                                        //1.意图   2.requestCode 请求码
-                                        startActivityForResult(it, 1000);
+                                        getPicFromCamera();
                                         dialog.dismiss();
                                         break;
                                         //调用相册
                                     case R.id.xiangce:
-                                        Toast.makeText(SetZiLiaoActivity.this, "相册", Toast.LENGTH_SHORT).show();
+                                        getPicFromAlbm();
+                                        dialog.dismiss();
                                         break;
                                 }
                             }
@@ -179,113 +191,133 @@ public class SetZiLiaoActivity extends BaseMvpActivity<LoginContract.LoginModel,
         }
     }
 
-    //拍照完成后回调
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1000 && resultCode == RESULT_OK) {
-            //调取裁剪功能  om.android.camera.action.CROP 裁剪的Action
-            Intent it = new Intent("com.android.camera.action.CROP");
-            //得到图片设置类型
-            it.setDataAndType(Uri.fromFile(file), "image/*");
-            //是否支持裁剪 设置 true 支持  false 不支持
-            it.putExtra("CROP", true);
-            //设置比例大小  1:1
-            it.putExtra("aspectX", 1);
-            it.putExtra("aspectY", 1);
-            //输出的大小
-            it.putExtra("outputX", 250);
-            it.putExtra("outputY", 250);
-            //将裁剪好的图片进行返回到Intent中
-            it.putExtra("return-data", true);
-            startActivityForResult(it, 2000);
-        }
-        //点击完裁剪的完成以后会执行的方法
-        if (requestCode == 2000 && resultCode == RESULT_OK) {
-            mBitmap = data.getParcelableExtra("data");
-            settx.setImageBitmap(mBitmap);
-            //裁剪完成开始上传到服务器
-            upLoadIcon(file);
-        }
+    public void success(UploadIconEntity uploadIconEntity) {
+        Log.i("lll","成功"+uploadIconEntity.getMessage());
+        String headPath = uploadIconEntity.getHeadPath();
+        Log.i("lll",headPath);
+        //loginSp.edit().putString("headIcon",headPath).commit();
+        /*得到新的头像值,和新的sessionId,昵称以及账号并存进去*/
+        //EventBus发送事件到登陆页面那一集首页
+        UploadIconEventBus uploadIconEventBus = new UploadIconEventBus(headPath);
+        EventBus.getDefault().postSticky(uploadIconEventBus);
+        loginSp.edit().putString("headPic",headPath).commit();
     }
 
 
-    //上传头像
-    @SuppressLint("CheckResult")
-    private void upLoadIcon(File myfile) {
-        MultipartBody.Part filePart = MultipartBody.Part.createFormData("image", file.getName(), RequestBody.create(
-                MediaType.parse("image/*"), myfile));//image/**/
-        //得到loginsp里面的userid,sessionid
-        final SharedPreferences loginsp = getSharedPreferences("login", MODE_PRIVATE);
-        String userId = loginsp.getString("userId","");
-        String sessionId = loginsp.getString("sessionId", "");
-        RetrofitUtils.getInstance().createApi(Constants.BASE_url,UserApi.class).uploadIcon(sessionId,userId,filePart).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<UploadIconEntity>() {
-            @Override
-            public void accept(UploadIconEntity uploadIconEntity) throws Exception {
-                Log.i("vvv","成功"+uploadIconEntity.getMessage());
-                Toast.makeText(SetZiLiaoActivity.this, "成功"+uploadIconEntity.getMessage(), Toast.LENGTH_SHORT).show();
-                if (uploadIconEntity.getStatus().equals("0000")) {
-                    String Phone = loginsp.getString("Phone", "");
-                    final String pwd = loginsp.getString("pwd", "");
-                    String mEncrypt = EncryptUtil.encrypt(pwd);
-                    //重新网络请求,进行登陆,更新数据,获取新的sessionId数据
-                    new LoginModel().login(Phone,mEncrypt).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<UserEntity>() {
-                        @Override
-                        public void accept(UserEntity userEntity) throws Exception {
-                            Log.i("mjb","闪传"+userEntity.getMessage());
-                            //new LoginModel().login(phone,pwd)
-                            //得到新的头像值,和新的sessionId,昵称以及账号并存进去
-                            //EventBus发送事件到登陆页面那一集首页
-                            UploadIconEventBus uploadIconEventBus = new UploadIconEventBus(userEntity.getResult().getSessionId(), userEntity.getResult().getUserInfo().getNickName(), userEntity.getResult().getUserInfo().getHeadPic(), userEntity.getResult().getUserInfo().getPhone());
-                            EventBus.getDefault().postSticky(uploadIconEventBus);
+    /**
+     * 从相机获取图片
+     */
+    private void getPicFromCamera() {
+        //用于保存调用相机拍照后所生成的文件
+        tempFile = new File(Environment.getExternalStorageDirectory().getPath(), System.currentTimeMillis() + ".jpg");
+        //跳转到调用系统相机
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //判断版本
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {   //如果在Android7.0以上,使用FileProvider获取Uri
+            intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            Uri contentUri = FileProvider.getUriForFile(SetZiLiaoActivity.this, "com.bwie.majunbao", tempFile);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
+            Log.e("dasd", contentUri.toString());
+        } else {    //否则使用Uri.fromFile(file)方法获取Uri
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
+        }
+        startActivityForResult(intent, CAMERA_REQUEST_CODE);
+    }
 
-                            String headPic1 = userEntity.getResult().getUserInfo().getHeadPic();
-                            String sessionId1 = userEntity.getResult().getSessionId();
-                           // String nickName1 = userEntity.getResult().getUserInfo().getNickName();
-                           // String phone1 = userEntity.getResult().getUserInfo().getPhone();
-                            //存值
-                            loginsp.edit().putString("headPic",headPic1).commit();
-                            loginsp.edit().putString("sessionId",sessionId1).commit();
-                          //  loginsp.edit().putString("nickName",nickName1).commit();
-                           // loginsp.edit().putString("Phone",phone1).commit();
+    /**
+     * 从相册获取图片
+     */
+    private void getPicFromAlbm() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, ALBUM_REQUEST_CODE);
+    }
 
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            // TODO: 2018/9/14 没有写请求失败
-                        }
-                    });
+
+    /**
+     * 裁剪图片
+     */
+    private void cropPhoto(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+
+        intent.putExtra("outputX", 300);
+        intent.putExtra("outputY", 300);
+        intent.putExtra("return-data", true);
+
+        startActivityForResult(intent, CROP_REQUEST_CODE);
+        Log.i("lll","5");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        switch (requestCode) {
+            case CAMERA_REQUEST_CODE:   //调用相机后返回
+                if (resultCode == RESULT_OK) {
+                    //用相机返回的照片去调用剪裁也需要对Uri进行处理
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Uri contentUri = FileProvider.getUriForFile(SetZiLiaoActivity.this, "com.bwie.majunbao", tempFile);
+                        cropPhoto(contentUri);
+                        Log.i("lll","3");
+
+                    } else {
+                        cropPhoto(Uri.fromFile(tempFile));
+                        Log.i("lll","4");
+
+                    }
                 }
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                Log.i("vvv","失败"+throwable.toString());
-                Toast.makeText(SetZiLiaoActivity.this, "头像上传失败"+throwable.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                break;
+            case ALBUM_REQUEST_CODE:    //调用相册后返回
+                if (resultCode == RESULT_OK) {
+                    Uri uri = intent.getData();
+                    cropPhoto(uri);
+                    Log.i("lll","2");
+                }
+                break;
+            case CROP_REQUEST_CODE:     //调用剪裁后返回
+                Bundle bundle = intent.getExtras();
+                if (bundle != null) {
+                    Log.i("lll","1");
+                    //在这里获得了剪裁后的Bitmap对象，可以用于上传
+                    Bitmap image = bundle.getParcelable("data");
+                    //设置到ImageView上
+                    settx.setImageBitmap(image);
+                    //也可以进行一些保存、压缩等操作后上传
+                    String path = saveImage("crop", image);
+                    Log.i("lll","file"+tempFile);
+                    Log.i("lll","path"+path);
+                    String sessionId = loginSp.getString("sessionId", "");
+                    String userId = loginSp.getString("userId", "");
+                    presenter.uploadIcon(sessionId,userId, new File(path));
+                }
+                break;
+        }
     }
 
+    public String saveImage(String name, Bitmap bmp) {
+        File appDir = new File(Environment.getExternalStorageDirectory().getPath());
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @Override
-    public void success(UserEntity userEntity) {
-
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = name + ".jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+            return file.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -295,7 +327,7 @@ public class SetZiLiaoActivity extends BaseMvpActivity<LoginContract.LoginModel,
 
     @Override
     public IBasePresenter initBasePresenter() {
-        return null;
+        return new UploadPresenter();
     }
 
     @Override

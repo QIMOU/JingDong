@@ -7,6 +7,7 @@ import com.bwie.majunbao.entity.GengXinEntity;
 import com.bwie.majunbao.entity.LeftFenLeiEntity;
 import com.bwie.majunbao.entity.ProductEntity;
 import com.bwie.majunbao.entity.SelectProductEntity;
+import com.bwie.majunbao.entity.UpdateEntity;
 import com.bwie.majunbao.entity.UploadIconEntity;
 import com.bwie.majunbao.entity.XiangQingEntity;
 import com.bwie.majunbao.entity.AddCartEntity;
@@ -34,7 +35,7 @@ public interface ProductApi {
     //搜索商品
     @POST("product/searchProducts")
     @FormUrlEncoded
-    Observable<SelectProductEntity> queryProduct(@Field("keyword") String keyword,@Field("page") String page);
+    Observable<SelectProductEntity> queryProduct(@Field("keywords") String keyword,@Field("page") String page);
     //发现
     @POST("satinApi?type=1&page=1")
     Observable<CartEntity> FaXian();
@@ -50,7 +51,7 @@ public interface ProductApi {
     //更新购物车
     @POST("product/updateCarts")
     @FormUrlEncoded
-    Observable<GengXinEntity> gengXinCart(@Field("uid") String uid, @Field("sellerid") String sellerid,@Field("pid") String pid,@Field("selected") String selected,@Field("num") String num);
+    Observable<UpdateEntity> updateCart(@Field("uid") String uid, @Field("sellerid") String sellerid, @Field("pid") String pid, @Field("selected") String selected, @Field("num") String num);
     //删除购物车
     @POST("product/deleteCart")
     @FormUrlEncoded

@@ -17,9 +17,12 @@ import com.bwie.majunbao.entity.XiangQingEntity;
 import com.bwie.majunbao.entity.AddCartEntity;
 import com.bwie.majunbao.presenter.XiangPresenter;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.hjm.bottomtabbar.BottomTabBar;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +43,10 @@ public class XiangQingActivity extends BaseMvpActivity<XiangContract.XiangModel,
     TextView detailPrice;
     @BindView(R.id.detail_title)
     TextView detailTitle;
-    @BindView(R.id.xia)
-    ImageView xia;
+  /*  @BindView(R.id.xia)
+    ImageView xia;*/
     private String mPid;
+    private BottomTabBar mBottomTabBar;
 
     @Override
     protected int setLayoutId() {
@@ -59,12 +63,12 @@ public class XiangQingActivity extends BaseMvpActivity<XiangContract.XiangModel,
             presenter.XiangQing(mPid);
         }
         //点击购物车图片
-        xia.setOnClickListener(new View.OnClickListener() {
+        /*xia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(XiangQingActivity.this, "该功能暂未开放", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
 
 
@@ -115,6 +119,11 @@ public class XiangQingActivity extends BaseMvpActivity<XiangContract.XiangModel,
             }
         });
 
+
+    }
+
+    //进入购物车
+    public void detailsoponcar(View view) {
 
     }
 

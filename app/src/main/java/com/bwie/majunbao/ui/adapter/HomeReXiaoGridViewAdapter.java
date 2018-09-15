@@ -67,7 +67,7 @@ class HomeReXiaoGridViewAdapter extends RecyclerView.Adapter<HomeReXiaoGridViewA
     public void onBindViewHolder(@NonNull HomeReXiaoGridViewAdapter.HomeReXiaoViewHolder holder, final int position) {
         mListBeanX = mTuijianBeanList.getList().get(position);
         holder.mFresco_img.setImageURI(mListBeanX.getImages().split("\\|")[0]);
-        Log.i("aaa",mListBeanX.getImages());
+       // Log.i("aaa",mListBeanX.getImages());
         holder.mText_title.setText(mListBeanX.getTitle());
         holder.mText_price.setText(mListBeanX.getPrice());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +77,7 @@ class HomeReXiaoGridViewAdapter extends RecyclerView.Adapter<HomeReXiaoGridViewA
                 Log.i("bbb",mTuijianBeanList.getList().get(position).getTitle());
                     Intent intent = new Intent(context, XiangQingActivity.class);
                     intent.putExtra("pid",mTuijianBeanList.getList().get(position).getPid()+"");
-                    Log.i("aaa",mTuijianBeanList.getList().get(position).getPid()+"");
+                  //  Log.i("aaa",mTuijianBeanList.getList().get(position).getPid()+"");
                     context.startActivity(intent);
             }
         });

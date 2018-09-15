@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.bwie.majunbao.R;
+import com.bwie.majunbao.eventbus.RegistEventBus;
 import com.bwie.majunbao.ui.fragment.CartFragment;
 import com.bwie.majunbao.ui.fragment.ClassFragment;
 import com.bwie.majunbao.ui.fragment.FindFragment;
@@ -12,6 +13,10 @@ import com.bwie.majunbao.ui.fragment.HomeFragment;
 import com.bwie.majunbao.ui.fragment.MyFragment;
 import com.gyf.barlibrary.ImmersionBar;
 import com.hjm.bottomtabbar.BottomTabBar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import majunbao.bwie.com.jingdong_base_marster.base.base_ui.BaseActivity;
 

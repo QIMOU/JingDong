@@ -69,15 +69,10 @@ tools:context=".ui.activity.LiuShiActivity">
             android:text="热搜"
             />
     </LinearLayout>
-    <HorizontalScrollView
-        android:scrollbars="none"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <com.example.library.AutoFlowLayout
             android:id="@+id/one_autoFlowLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    </HorizontalScrollView>
 
 </LinearLayout>
 <View
