@@ -15,7 +15,10 @@ import com.bwie.majunbao.common.Constants;
 import com.bwie.majunbao.contract.XiangContract;
 import com.bwie.majunbao.entity.XiangQingEntity;
 import com.bwie.majunbao.entity.AddCartEntity;
+import com.bwie.majunbao.eventbus.AddCartNotifyEventbus;
+import com.bwie.majunbao.eventbus.IntentActivityEventbus;
 import com.bwie.majunbao.presenter.XiangPresenter;
+import com.bwie.majunbao.ui.fragment.MyFragment;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.hjm.bottomtabbar.BottomTabBar;
 import com.youth.banner.Banner;
@@ -54,6 +57,12 @@ public class XiangQingActivity extends BaseMvpActivity<XiangContract.XiangModel,
     }
 
     @Override
+    protected void initData() {
+        super.initData();
+
+    }
+
+    @Override
     protected void initView() {
         super.initView();
         //获取intent值
@@ -62,17 +71,7 @@ public class XiangQingActivity extends BaseMvpActivity<XiangContract.XiangModel,
         if (mPid != null) {
             presenter.XiangQing(mPid);
         }
-        //点击购物车图片
-        /*xia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(XiangQingActivity.this, "该功能暂未开放", Toast.LENGTH_SHORT).show();
-            }
-        });*/
     }
-
-
-
 
     @Override
     protected void onDestroy() {
@@ -111,6 +110,7 @@ public class XiangQingActivity extends BaseMvpActivity<XiangContract.XiangModel,
             @Override
             public void accept(AddCartEntity addCartEntity) throws Exception {
                 Toast.makeText(XiangQingActivity.this, "添加购物车成功", Toast.LENGTH_SHORT).show();
+                EventBus.getDefault().postSticky(new AddCartNotifyEventbus(mPid));
             }
         }, new Consumer<Throwable>() {
             @Override
@@ -124,7 +124,8 @@ public class XiangQingActivity extends BaseMvpActivity<XiangContract.XiangModel,
 
     //进入购物车
     public void detailsoponcar(View view) {
-
+        //EventBus.getDefault().postSticky(new IntentActivityEventbus());
+        //finish();
     }
 
 

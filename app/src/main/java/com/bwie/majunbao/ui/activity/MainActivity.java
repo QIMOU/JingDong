@@ -1,10 +1,14 @@
 package com.bwie.majunbao.ui.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bwie.majunbao.R;
+import com.bwie.majunbao.eventbus.AddCartNotifyEventbus;
+import com.bwie.majunbao.eventbus.IntentActivityEventbus;
 import com.bwie.majunbao.eventbus.RegistEventBus;
 import com.bwie.majunbao.ui.fragment.CartFragment;
 import com.bwie.majunbao.ui.fragment.ClassFragment;
@@ -50,13 +54,22 @@ public class MainActivity extends BaseActivity {
                 });
     }
 
+
     @Override
     protected void initData() {
         super.initData();
+        //注册
+      //  EventBus.getDefault().register(this);
         //初始化沉浸式
         //ImmersionBar.with(this).init();
         //初始化控件
         mBottomTabBar = findViewById(R.id.bottom_tab_bar);
         mBottomTabBar.init(getSupportFragmentManager());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+      //  EventBus.getDefault().unregister(this);
     }
 }

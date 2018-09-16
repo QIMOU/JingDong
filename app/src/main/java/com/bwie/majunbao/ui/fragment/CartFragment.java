@@ -21,6 +21,7 @@ import com.bwie.majunbao.R;
 import com.bwie.majunbao.contract.CartContract;
 import com.bwie.majunbao.entity.CartEntity;
 import com.bwie.majunbao.entity.UpdateEntity;
+import com.bwie.majunbao.eventbus.AddCartNotifyEventbus;
 import com.bwie.majunbao.eventbus.CartClickEventbus;
 import com.bwie.majunbao.eventbus.NotifyfatherAdapter;
 import com.bwie.majunbao.presenter.CartPresenter;
@@ -74,13 +75,6 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
         setSmartRefresh();
         //网络请求
         presenter.showCart("17415");
-
-
-
-
-
-
-
     }
 
     private void setSelected() {
@@ -230,6 +224,13 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void Event(NotifyfatherAdapter notifyfatherAdapter) {
         mMyCartAdapter.notifyDataSetChanged();
+    }
+    //处理事件
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void Event(AddCartNotifyEventbus addCartNotifyEventbus) {
+        //重新查询购物车
+        presenter.showCart("17415");
+
     }
 
 }

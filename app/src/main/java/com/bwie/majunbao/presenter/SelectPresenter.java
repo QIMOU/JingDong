@@ -22,7 +22,7 @@ public class SelectPresenter extends SelectContract.SelectPresenter {
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.i("hhh","shibai");
+                Log.i("hhh","shibai"+throwable);
                 mView.failure("查询失败");
             }
         });

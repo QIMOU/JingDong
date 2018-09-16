@@ -21,7 +21,7 @@
         <com.youth.banner.Banner
             android:id="@+id/detail_banner"
             android:layout_width="match_parent"
-            android:layout_height="350dp"></com.youth.banner.Banner>
+            android:layout_height="380dp"></com.youth.banner.Banner>
         <TextView
             android:textStyle="bold"
             android:id="@+id/detail_price"

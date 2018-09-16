@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.bwie.majunbao.R;
 import com.bwie.majunbao.contract.SelectContract;
@@ -34,7 +35,7 @@ public class SearchActivity extends BaseMvpActivity<SelectContract.SelectMoldel,
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         if (name != null) {
-            presenter.queryProduct(name, page + "");
+            presenter.queryProduct(name, page+"");
         }
     }
 
@@ -61,7 +62,7 @@ public class SearchActivity extends BaseMvpActivity<SelectContract.SelectMoldel,
 
     @Override
     public void failure(String msg) {
-
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
