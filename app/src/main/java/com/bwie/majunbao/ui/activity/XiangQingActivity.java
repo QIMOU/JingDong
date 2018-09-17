@@ -18,6 +18,7 @@ import com.bwie.majunbao.entity.AddCartEntity;
 import com.bwie.majunbao.eventbus.AddCartNotifyEventbus;
 import com.bwie.majunbao.eventbus.IntentActivityEventbus;
 import com.bwie.majunbao.presenter.XiangPresenter;
+import com.bwie.majunbao.ui.fragment.CartFragment;
 import com.bwie.majunbao.ui.fragment.MyFragment;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.hjm.bottomtabbar.BottomTabBar;
@@ -124,8 +125,8 @@ public class XiangQingActivity extends BaseMvpActivity<XiangContract.XiangModel,
 
     //进入购物车
     public void detailsoponcar(View view) {
-        //EventBus.getDefault().postSticky(new IntentActivityEventbus());
-        //finish();
+        finish();
+        EventBus.getDefault().postSticky(new IntentActivityEventbus());
     }
 
 

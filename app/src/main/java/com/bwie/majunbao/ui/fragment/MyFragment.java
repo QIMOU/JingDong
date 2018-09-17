@@ -324,6 +324,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
 
 
+
     //添加布局
     @Override
     protected int setLayoutId() {

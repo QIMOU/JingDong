@@ -33,5 +33,6 @@
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
         <include layout="@layout/home_search"/>
+        <!--<include layout="@layout/toobar"/>-->
     </RelativeLayout>
 </LinearLayout>

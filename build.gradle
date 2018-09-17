@@ -21,7 +21,9 @@ allprojects {
         jcenter()
         //流式布局
         maven { url 'https://jitpack.io' }
-
+        maven {
+            url  "http://dl.bintray.com/nuptboyzhb/maven"
+        }
     }
 }
 

@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.bwie.majunbao.R;
 import com.bwie.majunbao.contract.ProductContract;
 import com.bwie.majunbao.entity.ProductEntity;
+import com.bwie.majunbao.eventbus.IntentActivityEventbus;
 import com.bwie.majunbao.presenter.ProductPresenter;
 import com.bwie.majunbao.ui.activity.HomeBannerClickActivity;
 import com.bwie.majunbao.ui.activity.LiuShiActivity;
@@ -32,6 +33,9 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +64,7 @@ public class HomeFragment extends BaseMvpFragment<ProductContract.ProductModel, 
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            //head_search_rr.setVisibility(View.GONE);
             mSmartMian.finishRefresh();
         }
     };
@@ -143,7 +148,6 @@ public class HomeFragment extends BaseMvpFragment<ProductContract.ProductModel, 
             public void onRefresh(RefreshLayout refreshlayout) {
                 //停止刷新
                 refreshlayout.finishRefresh();
-
                 if (homeFragmentAdapter!=null) {
                     homeFragmentAdapter.notifyDataSetChanged();
                 }

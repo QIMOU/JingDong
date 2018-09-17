@@ -15,7 +15,9 @@ import com.bwie.majunbao.R;
 import com.bwie.majunbao.entity.CartEntity;
 import com.bwie.majunbao.eventbus.AddCartNotifyEventbus;
 import com.bwie.majunbao.eventbus.CartClickEventbus;
+import com.bwie.majunbao.eventbus.NotifyEventBus;
 import com.bwie.majunbao.eventbus.NotifyfatherAdapter;
+import com.bwie.majunbao.eventbus.TotalPriceEventBus;
 import com.bwie.majunbao.weiget.MyCartJiaJianView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,15 +52,23 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
     public void onBindViewHolder(@NonNull final CartViewHolder holder, final int position) {
         CartEntity.DataBean.ListBean bean = list.get(position);
         holder.titleTv.setText(bean.getTitle());
-        holder.priceTv.setText(bean.getPrice());
-        holder.checkBox.setChecked(bean.getSelected()==1?true:false);
+        holder.priceTv.setText(bean.getBargainPrice()+"");
         String[] images = bean.getImages().split("\\|");
         if (images!=null&&images.length>0) {
             Glide.with(context).load(images[0]).into(holder.productIv);
         }else {
             holder.productIv.setImageResource(R.mipmap.ic_launcher_round);
         }
-
+        holder.mJiajianqi.setNumEt(bean.getNum());
+        holder.mJiajianqi.setJiaJianListener(new MyCartJiaJianView.JiaJianListener() {
+            @Override
+            public void getNum(int num) {
+                list.get(position).setNum(num);
+                updateCart(position);
+                EventBus.getDefault().postSticky(new TotalPriceEventBus());
+            }
+        });
+        holder.checkBox.setChecked(bean.getSelected()==1?true:false);
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,9 +82,11 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
                 }
                 updateCart(position);
                 EventBus.getDefault().postSticky(new NotifyfatherAdapter());
+                EventBus.getDefault().postSticky(new NotifyEventBus());
+                EventBus.getDefault().postSticky(new TotalPriceEventBus());
             }
         });
-        updateCart(position);
+        //updateCart(position);
 
 
     }

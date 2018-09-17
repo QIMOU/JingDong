@@ -23,7 +23,9 @@ import com.bwie.majunbao.entity.CartEntity;
 import com.bwie.majunbao.entity.UpdateEntity;
 import com.bwie.majunbao.eventbus.AddCartNotifyEventbus;
 import com.bwie.majunbao.eventbus.CartClickEventbus;
+import com.bwie.majunbao.eventbus.NotifyEventBus;
 import com.bwie.majunbao.eventbus.NotifyfatherAdapter;
+import com.bwie.majunbao.eventbus.TotalPriceEventBus;
 import com.bwie.majunbao.presenter.CartPresenter;
 import com.bwie.majunbao.ui.adapter.MyCartAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -66,6 +68,7 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
     };
     private MyCartAdapter mMyCartAdapter;
     private List<CartEntity.DataBean> mList;
+    private CartEntity.DataBean.ListBean mBean;
 
 
     @Override
@@ -75,6 +78,7 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
         setSmartRefresh();
         //网络请求
         presenter.showCart("17415");
+        setSelected();
     }
 
     private void setSelected() {
@@ -84,17 +88,50 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
                 if (allCheckbox.isChecked()) {
                     for (int i = 0; i < mList.size(); i++) {
                         for (int i1 = 0; i1 < mList.get(i).getList().size(); i1++) {
+                            mBean = mList.get(i).getList().get(i1);
                             mList.get(i).getList().get(i1).setSelected(1);
+                            Log.d("aaa","点击allcheckbox"+"第"+i+"个"+ mList.get(i).getList().get(i1).getTitle()+"----"+mList.get(i).getList().get(i1).getSelected());
+                            String selected = mBean.getSelected()+"";
+                            String num = mBean.getNum()+"";
+                            String pid = mBean.getPid()+"";
+                            String sellerid = mBean.getSellerid()+"";
+                            Log.d("aaa","全选中后数据是"+"selected"+selected+"num"+num+"pid"+pid+"sellerid"+sellerid+"---"+mBean.getTitle());
+                            if (num!=null&&pid!=null&&selected!=null&&sellerid!=null) {
+                                Log.d("aaa","执行到了全选后");
+                                presenter.updateCart("17415",sellerid,pid,selected,num);
+                                try {
+                                    Thread.sleep(50);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            };
                         }
                     }
                 }else {
                     for (int i = 0; i < mList.size(); i++) {
                         for (int i1 = 0; i1 < mList.get(i).getList().size(); i1++) {
+                            mBean = mList.get(i).getList().get(i1);
                             mList.get(i).getList().get(i1).setSelected(0);
+                            Log.d("aaa","点击allcheckbox"+"第"+i+"个"+ mList.get(i).getList().get(i1).getTitle()+"----"+mList.get(i).getList().get(i1).getSelected());
+                            String selected = mBean.getSelected()+"";
+                            String num = mBean.getNum()+"";
+                            String pid = mBean.getPid()+"";
+                            String sellerid = mBean.getSellerid()+"";
+                            if (num!=null&&pid!=null&&selected!=null&&sellerid!=null) {
+                                presenter.updateCart("17415",sellerid,pid,selected,num);
+                                try {
+                                    Thread.sleep(50);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            };
                         }
                     }
+
                 }
                 mMyCartAdapter.notifyDataSetChanged();
+                //计算
+                jSPrice();
             }
         });
     }
@@ -109,22 +146,26 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
 
     @Override
     public void success(CartEntity cartEntity) {
-        mList = cartEntity.getData();
-        mMyCartAdapter = new MyCartAdapter(getActivity(), mList);
-        my_recy.setAdapter(mMyCartAdapter);
+        if(cartEntity!=null){
+            mList = cartEntity.getData();
+            mMyCartAdapter = new MyCartAdapter(getActivity(), mList);
+            my_recy.setAdapter(mMyCartAdapter);
 
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < mList.size(); i++) {
-            for (int i1 = 0; i1 < mList.get(i).getList().size(); i1++) {
-                builder.append(mList.get(i).getList().get(i1).getSelected());
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < mList.size(); i++) {
+                for (int i1 = 0; i1 < mList.get(i).getList().size(); i1++) {
+                    builder.append(mList.get(i).getList().get(i1).getSelected());
+                }
             }
+            if (builder.toString().contains("0")) {
+                allCheckbox.setChecked(false);
+            }else {
+                allCheckbox.setChecked(true);
+            }
+
+            jSPrice();
         }
-        if (builder.toString().contains("0")) {
-            allCheckbox.setChecked(false);
-        }else {
-            allCheckbox.setChecked(true);
-        }
-        setSelected();
+
 
     }
     @Override
@@ -180,6 +221,7 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
     }
     /*设置刷新控件*/
     private void setSmartRefresh() {
+        mSmartMian.setEnableLoadMore(false);
         //自定义刷新的主要代码
         mSmartMian.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -192,19 +234,26 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
         mSmartMian.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                mMyCartAdapter.notifyDataSetChanged();
                 //停止刷新
                 refreshlayout.finishRefresh();
             }
         });
-        //加载更多
-        mSmartMian.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                //停止加载
-                refreshLayout.finishLoadMore();
+    }
+
+    private void jSPrice(){
+            double mZong=0;
+            for (int i = 0; i < mList.size(); i++) {
+                for (int i1 = 0; i1 < mList.get(i).getList().size(); i1++) {
+                    if (mList.get(i).getList().get(i1).getSelected()==1) {
+                        CartEntity.DataBean.ListBean bean = mList.get(i).getList().get(i1);
+                        int num = bean.getNum();
+                        double bargainPrice = bean.getBargainPrice();
+                        mZong += num*bargainPrice;
+                        Log.d("aaa","zongjia"+mZong);
+                    }
+                }
             }
-        });
+        totalPriceTv.setText("总价:"+mZong+"$");
     }
 
 
@@ -218,19 +267,43 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
         String pid = cartClickEventbus.getPid();
         String selected = cartClickEventbus.getSelected();
         String sellerid = cartClickEventbus.getSellerid();
-        presenter.updateCart("17415",sellerid,pid,selected,num);
+        if (num!=null&&pid!=null&&selected!=null&&sellerid!=null) {
+            presenter.updateCart("17415",sellerid,pid,selected,num);
+            //jSPrice();
+        }
     }
     //处理事件
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void Event(NotifyfatherAdapter notifyfatherAdapter) {
         mMyCartAdapter.notifyDataSetChanged();
+        //presenter.showCart("17415");
+        //jSPrice();
     }
     //处理事件
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void Event(AddCartNotifyEventbus addCartNotifyEventbus) {
         //重新查询购物车
         presenter.showCart("17415");
-
     }
-
+    //处理事件
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void Event(NotifyEventBus notifyEventbus) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < mList.size(); i++) {
+            for (int i1 = 0; i1 < mList.get(i).getList().size(); i1++) {
+                builder.append(mList.get(i).getList().get(i1).getSelected());
+            }
+        }
+        if (builder.toString().contains("0")) {
+            allCheckbox.setChecked(false);
+        }else {
+            allCheckbox.setChecked(true);
+        }
+    }
+    //处理事件
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void Event(TotalPriceEventBus totalPriceEventBus) {
+        //计算
+        jSPrice();
+    }
 }

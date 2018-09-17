@@ -1,5 +1,6 @@
 package com.bwie.majunbao.weiget;
 
+
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -12,10 +13,14 @@ import android.widget.Toast;
 
 import com.bwie.majunbao.R;
 
-import org.greenrobot.eventbus.EventBus;
 
-
-public class MyCartJiaJianView extends LinearLayout {
+/**
+ * Author:kson
+ * E-mail:19655910@qq.com
+ * Time:2018/08/22
+ * Description:自定义加减器
+ */
+public class MyCartJiaJianView extends LinearLayout{
 
     private TextView jiaTv,jiantv;
     private EditText numEt;
@@ -25,13 +30,14 @@ public class MyCartJiaJianView extends LinearLayout {
     }
 
     public MyCartJiaJianView(Context context, @Nullable AttributeSet attrs) {
-        this(context,  attrs,0);
+        this(context, attrs,0);
     }
 
     public MyCartJiaJianView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
+
     /**
      * 初始化自定义的布局
      */
@@ -54,8 +60,9 @@ public class MyCartJiaJianView extends LinearLayout {
             public void onClick(View v) {
                 num++;
                 numEt.setText(num+"");
-                String s = numEt.getText().toString();
-                EventBus.getDefault().post(s);
+                if (jiaJianListener!=null){
+                    jiaJianListener.getNum(num);
+                }
             }
         });
         jiantv.setOnClickListener(new OnClickListener() {
@@ -66,15 +73,31 @@ public class MyCartJiaJianView extends LinearLayout {
                     Toast.makeText(getContext(), "数量不能小于1", Toast.LENGTH_SHORT).show();
                     num = 1;
                 }
-                String s = numEt.getText().toString();
-                EventBus.getDefault().post(s);
+                numEt.setText(num+"");
+                if (jiaJianListener!=null){
+                    jiaJianListener.getNum(num);
+                }
             }
         });
-
     }
+
+    /**
+     * 设置editext数量
+     * @param
+     */
     public void setNumEt(int n) {
         numEt.setText(n+"");
         num = Integer.parseInt(numEt.getText().toString());
+    }
+
+    private JiaJianListener jiaJianListener;
+
+    public void setJiaJianListener(JiaJianListener jiaJianListener) {
+        this.jiaJianListener = jiaJianListener;
+    }
+
+    public interface JiaJianListener{
+        void getNum(int num);
     }
 
 }

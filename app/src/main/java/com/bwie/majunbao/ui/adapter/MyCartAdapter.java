@@ -13,12 +13,21 @@ import android.widget.TextView;
 import com.bwie.majunbao.R;
 import com.bwie.majunbao.contract.UploadContract;
 import com.bwie.majunbao.entity.CartEntity;
+import com.bwie.majunbao.eventbus.CartClickEventbus;
+import com.bwie.majunbao.eventbus.IntentActivityEventbus;
+import com.bwie.majunbao.eventbus.NotifyEventBus;
+import com.bwie.majunbao.eventbus.NotifyfatherAdapter;
+import com.bwie.majunbao.eventbus.TotalPriceEventBus;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.CartViewHolder> {
     private Context context;
     private List<CartEntity.DataBean> cartlist;
+    private CartEntity.DataBean.ListBean mBean1;
 
     public MyCartAdapter(Context context, List<CartEntity.DataBean> cartlista) {
         this.context = context;
@@ -56,21 +65,36 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.CartViewHo
             public void onClick(View view) {
                 if (holder.checkbox.isChecked()) {
                     for (int i = 0; i < bean.getList().size(); i++) {
+                        mBean1 = bean.getList().get(i);
                         bean.getList().get(i).setSelected(1);
-                        Log.d("aaa","点击父级checkbox"+ bean.getList().get(i).getSelected());
+                        Log.d("aaa","点击父级checkbox"+ bean.getList().get(i).getTitle()+"----"+bean.getList().get(i).getSelected());
+                        Log.d("aaa","真");
                     }
                 }else {
                     for (int i = 0; i < bean.getList().size(); i++) {
+                        mBean1 = bean.getList().get(i);
                         bean.getList().get(i).setSelected(0);
-                        Log.d("aaa","点击父级checkbox"+ bean.getList().get(i).getSelected());
+                        Log.d("aaa","点击父级checkbox"+ bean.getList().get(i).getTitle()+"----"+bean.getList().get(i).getSelected());
+                        Log.d("aaa","假");
                     }
                 }
                 myCartProductAdapter.notifyDataSetChanged();
+                updateCart();
+                EventBus.getDefault().postSticky(new NotifyEventBus());
+            //    EventBus.getDefault().postSticky(new NotifyEventBus());
+                EventBus.getDefault().postSticky(new TotalPriceEventBus());
             }
         });
 
 
 
+    }
+
+
+    private void updateCart() {
+        CartClickEventbus cartClickEventbus = new CartClickEventbus(mBean1.getPid() + "", mBean1.getSellerid() + "", mBean1.getSelected() + "", mBean1.getNum() + "");
+        Log.d("aaa",cartClickEventbus.toString());
+        EventBus.getDefault().postSticky(cartClickEventbus);
     }
 
     public List<CartEntity.DataBean> getCartList() {
