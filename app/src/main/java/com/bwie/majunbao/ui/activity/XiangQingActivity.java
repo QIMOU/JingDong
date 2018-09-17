@@ -1,9 +1,13 @@
 package com.bwie.majunbao.ui.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -119,14 +123,12 @@ public class XiangQingActivity extends BaseMvpActivity<XiangContract.XiangModel,
                 Toast.makeText(XiangQingActivity.this, "添加购物车失败", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     //进入购物车
     public void detailsoponcar(View view) {
         finish();
-        EventBus.getDefault().postSticky(new IntentActivityEventbus());
+       EventBus.getDefault().postSticky(new IntentActivityEventbus());
     }
 
 

@@ -134,6 +134,7 @@ public class MainActivity extends BaseActivity {
     //处理事件
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void Event(IntentActivityEventbus intentActivityEventbus) {
-        Toast.makeText(this, "进不去啊,大兄弟", Toast.LENGTH_SHORT).show();
+        mViewPager.setCurrentItem(3);
+        radioGroup.check(R.id.rb4);
     }
 }

@@ -37,7 +37,7 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
         this.context = context;
         this.list = list;
         //注册
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
     }
 
     @NonNull
@@ -86,9 +86,6 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
                 EventBus.getDefault().postSticky(new TotalPriceEventBus());
             }
         });
-        //updateCart(position);
-
-
     }
 
     private void updateCart(int position) {
@@ -119,20 +116,6 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
             priceTv = itemView.findViewById(R.id.price);
             titleTv = itemView.findViewById(R.id.title);
             mJiajianqi = itemView.findViewById(R.id.jiajianqi);
-        }
-    }
-    //处理事件
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void Event(AddCartNotifyEventbus addCartNotifyEventbus) {
-        String pid2 = addCartNotifyEventbus.getPid();
-        //重新查询购物车
-        for (int i = 0; i < list.size(); i++) {
-            int pid1 = list.get(i).getPid();
-            String pid=pid1+"";
-            if (pid.equals(pid2)) {
-                list.get(i).setSelected(1);
-                updateCart(i);
-            }
         }
     }
 }

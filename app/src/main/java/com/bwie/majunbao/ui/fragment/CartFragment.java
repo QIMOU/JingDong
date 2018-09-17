@@ -69,6 +69,7 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
     private MyCartAdapter mMyCartAdapter;
     private List<CartEntity.DataBean> mList;
     private CartEntity.DataBean.ListBean mBean;
+    private String mAddpid;
 
 
     @Override
@@ -155,6 +156,11 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
             for (int i = 0; i < mList.size(); i++) {
                 for (int i1 = 0; i1 < mList.get(i).getList().size(); i1++) {
                     builder.append(mList.get(i).getList().get(i1).getSelected());
+                    if (mAddpid.equals(mList.get(i).getList().get(i1).getPid()+"")) {
+                        mList.get(i).getList().get(i1).setSelected(1);
+                    }else {
+                        mList.get(i).getList().get(i1).setSelected(0);
+                    }
                 }
             }
             if (builder.toString().contains("0")) {
@@ -269,19 +275,18 @@ public class CartFragment extends BaseMvpFragment<CartContract.CartModel, CartCo
         String sellerid = cartClickEventbus.getSellerid();
         if (num!=null&&pid!=null&&selected!=null&&sellerid!=null) {
             presenter.updateCart("17415",sellerid,pid,selected,num);
-            //jSPrice();
         }
     }
     //处理事件
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void Event(NotifyfatherAdapter notifyfatherAdapter) {
         mMyCartAdapter.notifyDataSetChanged();
-        //presenter.showCart("17415");
-        //jSPrice();
+
     }
     //处理事件
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void Event(AddCartNotifyEventbus addCartNotifyEventbus) {
+        mAddpid = addCartNotifyEventbus.getPid();
         //重新查询购物车
         presenter.showCart("17415");
     }
