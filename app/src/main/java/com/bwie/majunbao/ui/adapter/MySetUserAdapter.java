@@ -46,7 +46,7 @@ public class MySetUserAdapter extends RecyclerView.Adapter<MySetUserAdapter.MyVi
     public void onBindViewHolder(@NonNull final MySetUserAdapter.MyViewHolder holder, final int position) {
         holder.mText.setText(list.get(position));
         if (list.get(position).equals("退出登录")) {
-            holder.mText.setBackgroundColor(R.drawable.my_login_background_shaper);
+           // holder.mText.setBackgroundColor(R.drawable.my_login_background_shaper);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

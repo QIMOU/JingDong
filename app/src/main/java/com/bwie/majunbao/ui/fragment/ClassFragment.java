@@ -70,6 +70,11 @@ public class ClassFragment extends BaseMvpFragment<FenLeiContract.FenLeiModel, F
     protected void initView() {
         super.initView();
         presenter.leftClass();
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         presenter.rightClass(cid);
         //搜索框
         tvHome.setOnClickListener(new View.OnClickListener() {
@@ -88,8 +93,8 @@ public class ClassFragment extends BaseMvpFragment<FenLeiContract.FenLeiModel, F
 
     @Override
     public void lsuccess(final LeftFenLeiEntity leftFenLeiEntity) {
-        Log.i("aaa", "左分类成功");
-        Log.i("aaa", "做分类" + leftFenLeiEntity.getMsg());
+       // Log.i("aaa", "左分类成功");
+       // Log.i("aaa", "做分类" + leftFenLeiEntity.getMsg());
         //左边展示
         mLeftAdapter = new LeftAdapter(getActivity(), leftFenLeiEntity.getData());
         lvMenu.setAdapter(mLeftAdapter);

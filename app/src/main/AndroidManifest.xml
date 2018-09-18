@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.bwie.majunbao"
-    >
+    package="com.bwie.majunbao">
+
     <!-- 权限 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 网络权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 写入权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- 网络动态监听 -->
-    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
+    <!--
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <!-- 读取权限 -->
     <application
         android:name=".app.Application"
@@ -24,9 +30,10 @@
         android:roundIcon="@mipmap/jd_buy_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon, android:theme"
-        >
-        <!--<provider
+        tools:replace="android:icon, android:theme">
+
+        <!--
+        <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.bwie.majunbao"
             android:grantUriPermissions="true"
@@ -34,7 +41,8 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
-        </provider>-->
+        </provider>
+        -->
         <!-- 欢迎页面activity -->
         <activity android:name=".ui.activity.WelcomeActivity">
             <intent-filter>
@@ -52,9 +60,9 @@
         <activity android:name=".ui.activity.SetUserActivity" />
         <activity android:name=".ui.activity.LiuShiActivity" />
         <activity android:name=".ui.activity.SearchActivity" />
-        <activity android:name=".ui.activity.SetZiLiaoActivity"></activity>
+        <activity android:name=".ui.activity.SetZiLiaoActivity" />
 
-        <!--腾讯bugly-->
+        <!-- 腾讯bugly -->
         <meta-data
             android:name="BUGLY_APPID"
             android:value="cc6984faad" />
@@ -66,9 +74,26 @@
         <meta-data
             android:name="BUGLY_APP_CHANNEL"
             android:value="myChannel" />
-        <!-- 配置Bugly调试模式（true或者false）-->
+        <!-- 配置Bugly调试模式（true或者false） -->
         <meta-data
             android:name="BUGLY_ENABLE_DEBUG"
             android:value="true" />
+
+        <activity android:name=".ui.activity.PayOrderActivity" />
+        <!-- 支付宝 -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+        <activity android:name=".ui.activity.PayActivity"></activity>
     </application>
+
 </manifest>

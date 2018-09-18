@@ -340,14 +340,11 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         //df.setTimeZone(TimeZone.getTimeZone("GMT+08:00")); // 不会受系统时区设置的影响,否则时间可能不准确
         Date curDate = new Date(System.currentTimeMillis());
         String format = df.format(curDate);
-        Log.i("hour","事件"+format);
         StringBuffer buffer = new StringBuffer();
         String substring = format.substring(0, 11);
         buffer.append(substring);
-        Log.d("ccc", substring);
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        Log.i("hour",hour+"");
         if (hour % 2 == 0) {
             miaosha_time.setText((hour+9) + "点场");
             buffer.append((hour + 2));

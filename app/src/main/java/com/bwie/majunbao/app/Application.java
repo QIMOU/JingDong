@@ -25,22 +25,22 @@ public class Application extends BaseApp {
         }
         Fresco.initialize(this);
         // 异常处理，不需要处理时注释掉这两句即可
-        CrashHandler crashHandler = CrashHandler.getInstance();
+     //   CrashHandler crashHandler = CrashHandler.getInstance();
         // 注册crashHandler
-        crashHandler.init(getApplicationContext());
+      //  crashHandler.init(getApplicationContext());
 
-        Context context = getApplicationContext();
+      //  Context context = getApplicationContext();
 // 获取当前包名
-        String packageName = context.getPackageName();
+       // String packageName = context.getPackageName();
 // 获取当前进程名
-        String processName = getProcessName(android.os.Process.myPid());
+       // String processName = getProcessName(android.os.Process.myPid());
 // 设置是否为上报进程
-        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
-        strategy.setUploadProcess(processName == null || processName.equals(packageName));
+      //  CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
+        //strategy.setUploadProcess(processName == null || processName.equals(packageName));
 // 初始化Bugly
         // CrashReport.initCrashReport(context, "c7d0b79c52", false, strategy);
 // 如果通过“AndroidManifest.xml”来配置APP信息，初始化方法如下
-        CrashReport.initCrashReport(context, strategy);
+      //  CrashReport.initCrashReport(context, strategy);
 
         // CrashReport.initCrashReport(getApplicationContext(), "c7d0b79c52", true );
         //  CrashReport.initCrashReport(getApplicationContext());
@@ -52,7 +52,7 @@ public class Application extends BaseApp {
      * @param pid 进程号
      * @return 进程名
      */
-    private static String getProcessName(int pid) {
+   /* private static String getProcessName(int pid) {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
@@ -73,5 +73,5 @@ public class Application extends BaseApp {
             }
         }
         return null;
-    }
+    }*/
 }

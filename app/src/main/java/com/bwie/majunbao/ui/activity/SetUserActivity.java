@@ -104,6 +104,15 @@ public class SetUserActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        //返回键
+        mylogintopback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     //接收UploadIconEventbus,并处理事件

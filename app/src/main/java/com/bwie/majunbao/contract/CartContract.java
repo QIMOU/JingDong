@@ -1,6 +1,7 @@
 package com.bwie.majunbao.contract;
 
 import com.bwie.majunbao.entity.CartEntity;
+import com.bwie.majunbao.entity.DelCartEntity;
 import com.bwie.majunbao.entity.UpdateEntity;
 
 import io.reactivex.Observable;
@@ -20,6 +21,12 @@ public interface CartContract {
         public abstract void showCart(String uid);
         //更新
         public abstract void updateCart(String uid,String sellerid,String pid,String selected,String num);
+        //删除
+        public abstract void delCart(String uid,String pid);
+        //重新查询购物车
+        public abstract void twoCart(String uid);
+
+
     }
     //view层
     interface ICartView extends IBaseView {
@@ -29,6 +36,11 @@ public interface CartContract {
         void failure(String msg);
         //更新的成功
         void updateSuccess(UpdateEntity updateEntity);
+        //删除成功
+        void delSuccess(DelCartEntity delCartEntity);
+        //重新查询购物车
+        void cartsuccess(CartEntity cartEntity);
+
 
     }
     //model层
@@ -37,5 +49,9 @@ public interface CartContract {
         Observable<CartEntity> showCart(String uid);
         //更新
         Observable<UpdateEntity> updateCart(String uid,String sellerid,String pid,String selected,String num);
+        //删除
+        Observable<DelCartEntity> delCart(String uid, String pid);
+        //重新查询购物车
+        Observable<CartEntity> twoCart(String uid);
     }
 }

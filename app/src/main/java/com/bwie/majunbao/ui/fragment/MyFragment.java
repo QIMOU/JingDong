@@ -75,6 +75,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     private String mHeadPic;
     private String mPhone;
     private SharedPreferences mSp;
+    private SharedPreferences rSp;
     private String mEncrypt;
 
 
@@ -94,6 +95,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         login.setOnClickListener(this);
         //登陆下面
         myXiamian.setOnClickListener(this);
+        //rSp = getActivity().getSharedPreferences("showcart", Context.MODE_PRIVATE);
+        //rSp.getBoolean("flag",false);
+
     }
 
     @Override
@@ -131,6 +135,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                      public void accept(UserEntity userEntity) throws Exception {
                          //登陆失败,密码错误
                          if (userEntity.getMessage().equals("登陆失败,账号或密码错误")) {
+                             //存值判断购物车显示隐藏
+                         //    rSp.edit().putBoolean("flag",true).commit();
                              TastyToast.makeText(getActivity(), "登陆信息已过期,请重新登陆", TastyToast.LENGTH_LONG, TastyToast.ERROR);
                              //给登陆注册重新赋值,设置成默认值
                              login.setText("登录/注册>");
@@ -141,7 +147,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                          }
                          //登陆成功,密码正确
                          if (userEntity.getMessage().equals("登陆成功")) {
-                             TastyToast.makeText(getActivity(), "主人欢迎回来!", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                             //存值判断购物车显示隐藏
+                          //   rSp.edit().putBoolean("flag",true).commit();
+                            // TastyToast.makeText(getActivity(), "主人欢迎回来!", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                              //获取昵称
                              String nickName = userEntity.getResult().getUserInfo().getNickName();
                              //获取头像

@@ -56,6 +56,9 @@ public interface ProductApi {
     @POST("product/deleteCart")
     @FormUrlEncoded
     Observable<DelCartEntity> delCart(@Field("uid") String uid, @Field("pid") String pid);
-
+    /*查询购物车*/
+    @POST("product/getCarts")
+    @FormUrlEncoded
+    Observable<CartEntity> twoCart(@Field("uid") String uid);
 
 }

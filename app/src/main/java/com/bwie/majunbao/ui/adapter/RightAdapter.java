@@ -27,7 +27,8 @@ public class RightAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return fenleibean.size();
+            return fenleibean==null?0:fenleibean.size();
+
     }
 
     @Override

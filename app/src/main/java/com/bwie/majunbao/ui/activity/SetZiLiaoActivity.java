@@ -137,6 +137,13 @@ public class SetZiLiaoActivity extends BaseMvpActivity<UploadContract.UploadMode
         //点击事件
         touxiang.setOnClickListener(this);
         username.setOnClickListener(this);
+        //返回
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
 

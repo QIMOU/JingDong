@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.PayActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#fff"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:text="京东收银台"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="#000"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#000"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rg"
+                >
+                <RadioButton
+                    android:id="@+id/zf1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/zfbzf"
+                    android:drawableRight="@android:drawable/btn_radio"
+                    android:text="     支付宝支付"
+                    android:textSize="20sp" />
+                <RadioButton
+                    android:id="@+id/zf2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/wxzf"
+                    android:drawableRight="@android:drawable/btn_radio"
+                    android:text="     微信支付"
+                    android:textSize="20sp" />
+                <RadioButton
+                    android:id="@+id/zf3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/nyyh"
+                    android:drawableRight="@android:drawable/btn_radio"
+                    android:text="     农业银行"
+                    android:textSize="20sp" />
+                <RadioButton
+                    android:id="@+id/zf4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/ylzf"
+                    android:drawableRight="@android:drawable/btn_radio"
+                    android:text="银联支付"
+                    android:textSize="20sp" />
+            </RadioGroup>
+        </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f00"
+        android:textSize="20sp"
+        android:text="支付"
+        android:onClick="zhifu"
+        />
+</LinearLayout>

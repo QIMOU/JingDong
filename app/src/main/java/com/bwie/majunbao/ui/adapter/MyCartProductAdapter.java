@@ -10,11 +10,15 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bwie.majunbao.R;
 import com.bwie.majunbao.entity.CartEntity;
 import com.bwie.majunbao.eventbus.AddCartNotifyEventbus;
 import com.bwie.majunbao.eventbus.CartClickEventbus;
+import com.bwie.majunbao.eventbus.DelEventBus;
+import com.bwie.majunbao.eventbus.NotifutwoEventBus;
 import com.bwie.majunbao.eventbus.NotifyEventBus;
 import com.bwie.majunbao.eventbus.NotifyfatherAdapter;
 import com.bwie.majunbao.eventbus.TotalPriceEventBus;
@@ -36,8 +40,6 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
     public MyCartProductAdapter(Context context, List<CartEntity.DataBean.ListBean> list) {
         this.context = context;
         this.list = list;
-        //注册
-//        EventBus.getDefault().register(this);
     }
 
     @NonNull
@@ -53,6 +55,13 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
         CartEntity.DataBean.ListBean bean = list.get(position);
         holder.titleTv.setText(bean.getTitle());
         holder.priceTv.setText(bean.getBargainPrice()+"");
+        holder.del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().postSticky(new DelEventBus(list.get(position).getPid()+""));
+            }
+        });
+
         String[] images = bean.getImages().split("\\|");
         if (images!=null&&images.length>0) {
             Glide.with(context).load(images[0]).into(holder.productIv);
@@ -93,9 +102,6 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
         Log.d("aaa",cartClickEventbus.toString());
         EventBus.getDefault().postSticky(cartClickEventbus);
     }
-
-
-
     @Override
     public int getItemCount() {
         return list==null?0:list.size();
@@ -103,11 +109,12 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView productIv;
-        private final CheckBox checkBox;
-        private final TextView priceTv;
-        private final TextView titleTv;
-        private final MyCartJiaJianView mJiajianqi;
+        private  ImageView productIv;
+        private  CheckBox checkBox;
+        private  TextView priceTv;
+        private  TextView titleTv;
+        private  TextView del;
+        private  MyCartJiaJianView mJiajianqi;
 
         public CartViewHolder(View itemView) {
             super(itemView);
@@ -116,6 +123,8 @@ class MyCartProductAdapter extends RecyclerView.Adapter<MyCartProductAdapter.Car
             priceTv = itemView.findViewById(R.id.price);
             titleTv = itemView.findViewById(R.id.title);
             mJiajianqi = itemView.findViewById(R.id.jiajianqi);
+            del = itemView.findViewById(R.id.del);
         }
     }
+
 }

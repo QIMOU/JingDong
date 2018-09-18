@@ -15,12 +15,15 @@ import com.bwie.majunbao.contract.UploadContract;
 import com.bwie.majunbao.entity.CartEntity;
 import com.bwie.majunbao.eventbus.CartClickEventbus;
 import com.bwie.majunbao.eventbus.IntentActivityEventbus;
+import com.bwie.majunbao.eventbus.NotifutwoEventBus;
 import com.bwie.majunbao.eventbus.NotifyEventBus;
 import com.bwie.majunbao.eventbus.NotifyfatherAdapter;
 import com.bwie.majunbao.eventbus.TotalPriceEventBus;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -28,6 +31,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.CartViewHo
     private Context context;
     private List<CartEntity.DataBean> cartlist;
     private CartEntity.DataBean.ListBean mBean1;
+    private MyCartProductAdapter mMyCartProductAdapter;
 
     public MyCartAdapter(Context context, List<CartEntity.DataBean> cartlista) {
         this.context = context;
@@ -47,8 +51,8 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.CartViewHo
         final CartEntity.DataBean bean = cartlist.get(position);
         holder.nameTv.setText(bean.getSellerName());
         holder.productXRY.setLayoutManager(new LinearLayoutManager(context));
-        final MyCartProductAdapter myCartProductAdapter = new MyCartProductAdapter(context, bean.getList());
-        holder.productXRY.setAdapter(myCartProductAdapter);
+        mMyCartProductAdapter = new MyCartProductAdapter(context, bean.getList());
+        holder.productXRY.setAdapter(mMyCartProductAdapter);
 
         for (int i = 0; i < bean.getList().size(); i++) {
             if (bean.getList().get(i).getSelected()==1?true:false) {
@@ -78,19 +82,14 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.CartViewHo
                         Log.d("aaa","假");
                     }
                 }
-                myCartProductAdapter.notifyDataSetChanged();
+                mMyCartProductAdapter.notifyDataSetChanged();
                 updateCart();
                 EventBus.getDefault().postSticky(new NotifyEventBus());
             //    EventBus.getDefault().postSticky(new NotifyEventBus());
                 EventBus.getDefault().postSticky(new TotalPriceEventBus());
             }
         });
-
-
-
     }
-
-
     private void updateCart() {
         CartClickEventbus cartClickEventbus = new CartClickEventbus(mBean1.getPid() + "", mBean1.getSellerid() + "", mBean1.getSelected() + "", mBean1.getNum() + "");
         Log.d("aaa",cartClickEventbus.toString());
@@ -117,4 +116,5 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.CartViewHo
             productXRY = itemView.findViewById(R.id.productXRV);
         }
     }
+
 }

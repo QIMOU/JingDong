@@ -1,5 +1,6 @@
 package com.bwie.majunbao.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -55,6 +56,7 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.LoginModel,Logi
     /*成员变量*/
     private String mUser;//登陆的账号
     private String mPwd;//登陆后的密码
+    private SharedPreferences rSp;
 
 
 
@@ -90,6 +92,9 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.LoginModel,Logi
         xinyonghuzc.setOnClickListener(this);
         //返回
         mylogintopback.setOnClickListener(this);
+       // rSp = getSharedPreferences("showcart", Context.MODE_PRIVATE);
+      //  rSp.getBoolean("flag",false);
+
     }
 
     @Override
@@ -102,10 +107,14 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.LoginModel,Logi
     public void success(UserEntity userEntity) {
         //登陆失败,密码错误
         if (userEntity.getMessage().equals("登陆失败,账号或密码错误")) {
+            //存值判断购物车显示隐藏
+           // rSp.edit().putBoolean("flag",false).commit();
             TastyToast.makeText(getApplicationContext(), "登录失败,账号或密码错误", TastyToast.LENGTH_LONG, TastyToast.ERROR);
         }
         //登陆成功,密码正确
         if (userEntity.getMessage().equals("登陆成功")) {
+            //存值判断购物车显示隐藏
+            //rSp.edit().putBoolean("flag",true).commit();
             TastyToast.makeText(getApplicationContext(), "登录成功", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
             //获取昵称
             String nickName = userEntity.getResult().getUserInfo().getNickName();

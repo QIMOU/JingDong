@@ -197,7 +197,7 @@ public class HomeFragment extends BaseMvpFragment<ProductContract.ProductModel, 
      */
     @Override
     public void failure(String msg) {
-        Toast.makeText(mActivity, msg, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(mActivity, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override

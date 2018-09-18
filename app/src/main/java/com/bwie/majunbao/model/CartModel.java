@@ -5,6 +5,7 @@ import com.bwie.majunbao.common.Constants;
 import com.bwie.majunbao.contract.CartContract;
 import com.bwie.majunbao.contract.ProductContract;
 import com.bwie.majunbao.entity.CartEntity;
+import com.bwie.majunbao.entity.DelCartEntity;
 import com.bwie.majunbao.entity.ProductEntity;
 import com.bwie.majunbao.entity.UpdateEntity;
 
@@ -24,6 +25,17 @@ public class CartModel implements CartContract.CartModel {
     @Override
     public Observable<UpdateEntity> updateCart(String uid, String sellerid, String pid, String selected, String num) {
         return RetrofitUtils.getInstance().createApi(Constants.BASE_URL,ProductApi.class).updateCart(uid, sellerid, pid, selected, num).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+
+    }
+    //删除
+    @Override
+    public Observable<DelCartEntity> delCart(String uid, String pid) {
+        return RetrofitUtils.getInstance().createApi(Constants.BASE_URL,ProductApi.class).delCart(uid, pid).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<CartEntity> twoCart(String uid) {
+        return RetrofitUtils.getInstance().createApi(Constants.BASE_URL,ProductApi.class).showCart(uid).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 
     }
 
