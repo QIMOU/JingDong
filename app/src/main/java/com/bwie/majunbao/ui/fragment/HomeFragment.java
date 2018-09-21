@@ -1,6 +1,7 @@
 package com.bwie.majunbao.ui.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,12 +28,15 @@ import com.bwie.majunbao.eventbus.IntentActivityEventbus;
 import com.bwie.majunbao.presenter.ProductPresenter;
 import com.bwie.majunbao.ui.activity.HomeBannerClickActivity;
 import com.bwie.majunbao.ui.activity.LiuShiActivity;
+import com.bwie.majunbao.ui.activity.MainActivity;
 import com.bwie.majunbao.ui.adapter.HomeFragmentAdapter;
 import com.gyf.barlibrary.ImmersionBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -43,6 +47,8 @@ import butterknife.Unbinder;
 import majunbao.bwie.com.jingdong_base_marster.base.base_ui.BaseFragment;
 import majunbao.bwie.com.jingdong_base_marster.base.mvp.BaseMvpFragment;
 import majunbao.bwie.com.jingdong_base_marster.base.mvp.IBasePresenter;
+
+import static com.darsh.multipleimageselect.helpers.Constants.REQUEST_CODE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,6 +101,7 @@ public class HomeFragment extends BaseMvpFragment<ProductContract.ProductModel, 
         //设置recyclerview下滑搜索栏
         setHomeRecysearch();
         tvHome.setOnClickListener(this);
+        sao.setOnClickListener(this);
     }
 
     private void setHomeRecysearch() {
@@ -149,7 +156,8 @@ public class HomeFragment extends BaseMvpFragment<ProductContract.ProductModel, 
                 //停止刷新
                 refreshlayout.finishRefresh();
                 if (homeFragmentAdapter!=null) {
-                    homeFragmentAdapter.notifyDataSetChanged();
+                    //homeFragmentAdapter.notifyDataSetChanged();
+                    presenter.showProduct();
                 }
             }
         });
@@ -238,6 +246,38 @@ public class HomeFragment extends BaseMvpFragment<ProductContract.ProductModel, 
     //搜索的点击事件
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(getActivity(),LiuShiActivity.class));
+        switch (view.getId()){
+            case R.id.tv_home:
+                startActivity(new Intent(getActivity(),LiuShiActivity.class));
+                break;
+            case R.id.sao:
+               // Toast.makeText(mActivity, "saole", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /**
+         * 处理二维码扫描结果
+         */
+        if (requestCode == REQUEST_CODE) {
+            //处理扫描结果（在界面1   上显示）
+            if (null != data) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+                    Toast.makeText(getActivity(), "解析结果:" + result, Toast.LENGTH_LONG).show();
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    Toast.makeText(getActivity(), "解析二维码失败", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 }

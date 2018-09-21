@@ -11,11 +11,8 @@ import android.widget.Toast;
 import com.bwie.majunbao.R;
 import com.bwie.majunbao.contract.OrderContract;
 import com.bwie.majunbao.entity.OrderEntity;
-import com.bwie.majunbao.eventbus.PayEventBus;
 import com.bwie.majunbao.presenter.OrderPresenter;
 import com.bwie.majunbao.utils.Md5;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +41,7 @@ public class PayOrderActivity extends BaseMvpActivity<OrderContract.OrderModel,O
         super.initView();
         pay.setOnClickListener(this);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

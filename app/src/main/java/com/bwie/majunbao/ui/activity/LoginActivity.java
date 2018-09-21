@@ -1,22 +1,16 @@
 package com.bwie.majunbao.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bwie.majunbao.R;
 import com.bwie.majunbao.contract.LoginContract;
-import com.bwie.majunbao.contract.ProductContract;
-import com.bwie.majunbao.entity.ProductEntity;
 import com.bwie.majunbao.entity.UserEntity;
 import com.bwie.majunbao.eventbus.LoginEventBus;
 import com.bwie.majunbao.eventbus.RegistEventBus;
@@ -28,13 +22,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import majunbao.bwie.com.jingdong_base_marster.base.mvp.BaseMvpActivity;
 import majunbao.bwie.com.jingdong_base_marster.base.mvp.IBasePresenter;
-import majunbao.bwie.com.jingdong_base_marster.utils.SharedPreferencesUtils;
 
 public class LoginActivity extends BaseMvpActivity<LoginContract.LoginModel,LoginContract.LoginPresenter> implements LoginContract.ILoginView, View.OnClickListener {
 
@@ -82,25 +73,20 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.LoginModel,Logi
         super.initData();
         //注册eventbus
         EventBus.getDefault().register(this);
- /*       EventBus.getDefault().register(this);
-        //存储信息sp
-        mSp = getSharedPreferences("login", MODE_PRIVATE);
-        mEditor = mSp.edit();*/
         //登陆
         loginUser.setOnClickListener(this);
         //新用户注册
         xinyonghuzc.setOnClickListener(this);
         //返回
         mylogintopback.setOnClickListener(this);
-       // rSp = getSharedPreferences("showcart", Context.MODE_PRIVATE);
-      //  rSp.getBoolean("flag",false);
-
     }
 
     @Override
     protected void initView() {
         super.initView();
     }
+
+
 
     /*登陆成功*/
     @Override
@@ -151,9 +137,6 @@ public class LoginActivity extends BaseMvpActivity<LoginContract.LoginModel,Logi
             mEditor.putString("birthday",birthday).commit();
             //存性别
             mEditor.putString("sex",sex).commit();
-            Log.i("sessionid",userEntity.getResult().getSessionId());
-            //把新的sessionid存进去
-            mEditor.putString("sessionId",userEntity.getResult().getSessionId()).commit();
             //发送事件到登陆LoginEventBus
             LoginEventBus loginEventBus = new LoginEventBus(userId, sessionId, nickName, sex, Phone, headPic);
             EventBus.getDefault().post(loginEventBus);

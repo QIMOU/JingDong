@@ -85,20 +85,6 @@ dependencies {
     // 支持 GIF 动图，需要添加
     implementation 'com.facebook.fresco:animated-gif:0.14.1'
 
-    // 支持 WebP 静态图及 WebP 动图，需要添加
-
-    //implementation 'com.facebook.fresco:animated-webp:0.14.1'
-
-    //implementation 'com.facebook.fresco:webpsupport:0.14.1'
-
-    // 在 API < 14 上的机器支持 WebP 时，需要添加
-
-    //implementation 'com.facebook.fresco:animated-base-support:0.14.1'
-
-    //2.沉浸式
-
-    // implementation 'com.jaeger.statusbarutil:library:1.5.1'
-
     //Glide图片加载框架
     implementation 'com.github.bumptech.glide:glide:4.7.1'
 
@@ -137,10 +123,15 @@ dependencies {
     //其中latest.release指代最新Bugly NDK版本号，也可以指定
     //侧滑
     implementation 'com.github.anzaizai:EasySwipeMenuLayout:1.1.2'
-    //alertdialog
-    implementation 'com.github.open-android:MaterailDialog:v1.0.2'
-
+    //retrofit不能传字符串 需要添加
     implementation 'com.squareup.retrofit2:converter-scalars:2.0.0'
+    //手机申请权限
+    //implementation 'com.github.czy1121:settingscompat:1.1.4'
+    implementation 'com.android.support:design:27.+'
+    implementation project(path: ':networkjudgment')
+    //zxing
+    implementation 'cn.yipianfengye.android:zxing-library:2.2'
+
 }
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->

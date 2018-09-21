@@ -84,7 +84,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         super.initData();
         //注册eventbus
         EventBus.getDefault().register(this);
-
         //设置按钮
         shezhi.setOnClickListener(this);
         //对话按钮
@@ -95,9 +94,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         login.setOnClickListener(this);
         //登陆下面
         myXiamian.setOnClickListener(this);
-        //rSp = getActivity().getSharedPreferences("showcart", Context.MODE_PRIVATE);
-        //rSp.getBoolean("flag",false);
-
     }
 
     @Override
@@ -126,79 +122,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 login.setText(nickName);//赋值昵称
                 login.setTextColor(Color.parseColor("#365663"));//改变昵称字体颜色
                 myfragmentbg.setBackgroundResource(R.drawable.loginafter);//登陆成功改变背景图片
-                //获取密码
-                //给密码加密,获取新的密码
-                mEncrypt = EncryptUtil.encrypt(pwd);
-                //重新请求网络数据,并且把sessionid重新赋值
-                 new LoginModel().login(Phone, mEncrypt).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<UserEntity>() {
-                     @Override
-                     public void accept(UserEntity userEntity) throws Exception {
-                         //登陆失败,密码错误
-                         if (userEntity.getMessage().equals("登陆失败,账号或密码错误")) {
-                             //存值判断购物车显示隐藏
-                         //    rSp.edit().putBoolean("flag",true).commit();
-                             TastyToast.makeText(getActivity(), "登陆信息已过期,请重新登陆", TastyToast.LENGTH_LONG, TastyToast.ERROR);
-                             //给登陆注册重新赋值,设置成默认值
-                             login.setText("登录/注册>");
-                             //给头像重新赋值,设置成默认值
-                             touxiang.setImageResource(R.drawable.bg7);
-                             //注销更换背景图片
-                             myfragmentbg.setBackgroundResource(R.drawable.mybackground1);
-                         }
-                         //登陆成功,密码正确
-                         if (userEntity.getMessage().equals("登陆成功")) {
-                             //存值判断购物车显示隐藏
-                          //   rSp.edit().putBoolean("flag",true).commit();
-                            // TastyToast.makeText(getActivity(), "主人欢迎回来!", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
-                             //获取昵称
-                             String nickName = userEntity.getResult().getUserInfo().getNickName();
-                             //获取头像
-                             String headPic = userEntity.getResult().getUserInfo().getHeadPic();
-                             //获取账号
-                             String Phone = userEntity.getResult().getUserInfo().getPhone();
-                             //获取sessionid
-                             String sessionId = userEntity.getResult().getSessionId();
-                             //获取userId,userId为数字需要+""转成字符串
-                             String userId = userEntity.getResult().getUserId()+"";
-                             //获取性别
-                             String sex = userEntity.getResult().getUserInfo().getSex()+"";
-                             //获取生日
-                             String birthday = userEntity.getResult().getUserInfo().getBirthday()+"";
-                             //在下面获取登陆密码
-                             //通过sp存值把以下数据存进sp中
-                             SharedPreferences loginsp = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-                             SharedPreferences.Editor mEditor = loginsp.edit();
-                             //存昵称
-                             mEditor.putString("nickName",nickName).commit();
-                             //存头像
-                             mEditor.putString("headPic",headPic).commit();
-                             //存账号
-                             mEditor.putString("Phone",Phone).commit();
-                             //存密码
-                             //mEncrypt为加密后的密码
-                             mEditor.putString("pwd", pwd).commit();
-                             //存sessionId
-                             mEditor.putString("sessionId",sessionId).commit();
-                             //存userId
-                             mEditor.putString("userId",userId).commit();
-                             //存生日
-                             mEditor.putString("birthday",birthday).commit();
-                             //存性别
-                             mEditor.putString("sex",sex).commit();
-                             Log.i("sessionid",userEntity.getResult().getSessionId());
-                             //把新的sessionid存进去
-                             mEditor.putString("sessionId",userEntity.getResult().getSessionId()).commit();
-                             Log.i("sessionid",userEntity.getResult().getSessionId());
-                             touxiang.setImageURI(Uri.parse(headPic));//赋值头像
-                             login.setText(nickName);//赋值昵称
-                             login.setTextColor(Color.parseColor("#365663"));//改变昵称字体颜色
-                             myfragmentbg.setBackgroundResource(R.drawable.loginafter);//登陆成功改变背景图片
-                         }
-                     }
-                 });
-                // presenter.login(Phone,pwd);
-                //在执行成功的success方法中把新的sessionId存进去
-                //presenter.login(Phone,pwd);
             }
         }
     }
@@ -251,20 +174,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    /**
-     * 查找presenter,并返回当前presenter
-     * @return
-     */
-
-    /*成功的回调*/
- /*   @Override
-    public void success(UserEntity userEntity) {
-        Log.i("sessionid",userEntity.getResult().getSessionId());
-        //把新的sessionid存进去
-        mSp.edit().putString("pwd",userEntity.getResult().getSessionId()).commit();
-    }*/
-
-
     //CanCelEventBus处理事件
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(CanCelEventBus canCelEventBus) {
@@ -293,44 +202,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             login.setText(loginEventBus.nickNick);//赋值昵称
             login.setTextColor(Color.parseColor("#365663"));//改变昵称字体颜色
             myfragmentbg.setBackgroundResource(R.drawable.loginafter);//登陆成功改变背景图片
-            //重新请求网络数据,并且把sessionid重新赋值
-           // presenter.login(Phone,pwd);
-            //在执行成功的success方法中把新的sessionId存进去
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     //添加布局

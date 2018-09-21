@@ -14,12 +14,7 @@ import android.widget.Toast;
 import com.bwie.majunbao.R;
 
 
-/**
- * Author:kson
- * E-mail:19655910@qq.com
- * Time:2018/08/22
- * Description:自定义加减器
- */
+
 public class MyCartJiaJianView extends LinearLayout{
 
     private TextView jiaTv,jiantv;

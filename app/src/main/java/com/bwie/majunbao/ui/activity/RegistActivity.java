@@ -1,9 +1,6 @@
 package com.bwie.majunbao.ui.activity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -19,8 +16,6 @@ import com.bwie.majunbao.utils.EncryptUtil;
 import com.sdsmdg.tastytoast.TastyToast;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +67,8 @@ public class RegistActivity extends BaseMvpActivity<RegistContract.RegistModel, 
         super.initData();
         mRandomnum = (int) (Math.random() * 1000);
     }
+
+
     public void register(View view) {
         //得到edittext输入的值
         phone = mobile.getText().toString();//账号

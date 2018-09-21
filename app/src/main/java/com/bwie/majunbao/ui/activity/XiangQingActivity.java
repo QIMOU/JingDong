@@ -1,13 +1,9 @@
 package com.bwie.majunbao.ui.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,8 +18,6 @@ import com.bwie.majunbao.entity.AddCartEntity;
 import com.bwie.majunbao.eventbus.AddCartNotifyEventbus;
 import com.bwie.majunbao.eventbus.IntentActivityEventbus;
 import com.bwie.majunbao.presenter.XiangPresenter;
-import com.bwie.majunbao.ui.fragment.CartFragment;
-import com.bwie.majunbao.ui.fragment.MyFragment;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.hjm.bottomtabbar.BottomTabBar;
 import com.youth.banner.Banner;
@@ -77,6 +71,7 @@ public class XiangQingActivity extends BaseMvpActivity<XiangContract.XiangModel,
             presenter.XiangQing(mPid);
         }
     }
+
 
     @Override
     protected void onDestroy() {

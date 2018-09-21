@@ -1,2 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="majunbao.bwie.com.jingdong_base_marster" />
+    package="majunbao.bwie.com.jingdong_base_marster" >
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+</manifest>

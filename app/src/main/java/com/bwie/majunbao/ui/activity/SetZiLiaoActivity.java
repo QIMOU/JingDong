@@ -1,11 +1,9 @@
 package com.bwie.majunbao.ui.activity;
 
-import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -20,16 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bwie.majunbao.R;
-import com.bwie.majunbao.api.UserApi;
-import com.bwie.majunbao.common.Constants;
-import com.bwie.majunbao.contract.LoginContract;
 import com.bwie.majunbao.contract.UploadContract;
 import com.bwie.majunbao.entity.UploadIconEntity;
-import com.bwie.majunbao.entity.UserEntity;
 import com.bwie.majunbao.eventbus.UploadIconEventBus;
-import com.bwie.majunbao.model.LoginModel;
 import com.bwie.majunbao.presenter.UploadPresenter;
-import com.bwie.majunbao.utils.EncryptUtil;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.OnItemClickListener;
@@ -43,16 +35,8 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 import majunbao.bwie.com.jingdong_base_marster.base.mvp.BaseMvpActivity;
 import majunbao.bwie.com.jingdong_base_marster.base.mvp.IBasePresenter;
-import majunbao.bwie.com.jingdong_base_marster.net.RetrofitUtils;
-import majunbao.bwie.com.jingdong_base_marster.utils.SharedPreferencesUtils;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 public class SetZiLiaoActivity extends BaseMvpActivity<UploadContract.UploadModel, UploadContract.UploadPresenter> implements UploadContract.IUploadView, View.OnClickListener {
 
@@ -145,6 +129,7 @@ public class SetZiLiaoActivity extends BaseMvpActivity<UploadContract.UploadMode
             }
         });
     }
+
 
 
 

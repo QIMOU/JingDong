@@ -86,11 +86,9 @@ public class MyCartRefreshHeader extends LinearLayout implements RefreshHeader {
                 //每次重新下拉时，将图片资源重置为小车
                 mImage.setImageResource(R.drawable.anim_mycartpull_refreshing);
                 refreshingAnim = (AnimationDrawable) mImage.getDrawable();
-                //refreshingAnim.start();
                 if (!refreshingAnim.isRunning()) {
                     refreshingAnim.start();
                 }
-                //mImage.setImageResource(R.drawable.b3p);
                 tv_remain.setText("松开更新...");
                 break;
             case Refreshing: //正在刷新。只调用一次
@@ -105,10 +103,6 @@ public class MyCartRefreshHeader extends LinearLayout implements RefreshHeader {
                 break;
             case RefreshFinish://刷新结束
                 //刷新结束时调用该动画
-               /* mCurTranslationX = mImage.getTranslationX();
-                Animation translateAnimation = new TranslateAnimation(mCurTranslationX,1000,0,0);
-                translateAnimation.setDuration(500);
-                mImage.startAnimation(translateAnimation);*/
                 tv_remain.setText("更新完成...");
                 break;
         }

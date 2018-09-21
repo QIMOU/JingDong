@@ -1,19 +1,14 @@
 package com.bwie.majunbao.app;
 
-import android.content.Context;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.StrictMode;
-import android.text.TextUtils;
 
+import com.bwie.majunbao.receiver.NetConnectionReceiver;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.tencent.bugly.crashreport.CrashReport;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import majunbao.bwie.com.jingdong_base_marster.base.BaseApp;
-import majunbao.bwie.com.jingdong_base_marster.utils.CrashHandler;
 
 public class Application extends BaseApp {
     @Override
@@ -24,6 +19,15 @@ public class Application extends BaseApp {
             StrictMode.setVmPolicy(builder.build());
         }
         Fresco.initialize(this);
+
+        //zxing
+        ZXingLibrary.initDisplayOpinion(this);
+
+
+
+
+
+
         // 异常处理，不需要处理时注释掉这两句即可
      //   CrashHandler crashHandler = CrashHandler.getInstance();
         // 注册crashHandler
@@ -37,6 +41,10 @@ public class Application extends BaseApp {
 // 设置是否为上报进程
       //  CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
         //strategy.setUploadProcess(processName == null || processName.equals(packageName));
+
+
+
+
 // 初始化Bugly
         // CrashReport.initCrashReport(context, "c7d0b79c52", false, strategy);
 // 如果通过“AndroidManifest.xml”来配置APP信息，初始化方法如下

@@ -13,62 +13,64 @@
         android:layout_weight="9"
         android:id="@+id/fram"
         ></com.bwie.majunbao.weiget.NoHuaDongFragment>
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/radio_group"
-        android:gravity="center"
-        android:orientation="horizontal"
-        >
-        <RadioButton
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/rb1"
-            android:button="@null"
-            android:gravity="center"
-            android:background="@drawable/selected_drawable_home"
-            />
-        <RadioButton
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/rb2"
-            android:text=""
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:background="@drawable/selected_drawable_find"
 
-            />
-        <RadioButton
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/rb3"
-            android:layout_weight="1"
-            android:button="@null"
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignBottom="@+id/fram"
+            android:layout_marginBottom="0dp"
             android:gravity="center"
-            android:background="@drawable/selected_drawable_class"
+            android:orientation="horizontal">
 
-            />
-        <RadioButton
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/rb4"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:background="@drawable/selected_drawable_cart"
-            />
-        <RadioButton
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/rb5"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:background="@drawable/selected_drawable_my"
-            />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/rb1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/selected_drawable_home"
+                android:button="@null"
+                android:gravity="center" />
 
-</LinearLayout>
+            <RadioButton
+                android:id="@+id/rb2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/selected_drawable_find"
+                android:button="@null"
+                android:gravity="center"
+                android:text=""
+
+                />
+
+            <RadioButton
+                android:id="@+id/rb3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/selected_drawable_class"
+                android:button="@null"
+                android:gravity="center"
+
+                />
+
+            <RadioButton
+                android:id="@+id/rb4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/selected_drawable_cart"
+                android:button="@null"
+                android:gravity="center" />
+
+            <RadioButton
+                android:id="@+id/rb5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/selected_drawable_my"
+                android:button="@null"
+                android:gravity="center" />
+        </RadioGroup>
+    </LinearLayout>

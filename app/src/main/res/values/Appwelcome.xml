@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppWelcome" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/jdsy</item>
+    </style>
+
+    <style name="Appwelcome" parent="android:Theme.Translucent.NoTitleBar.Fullscreen"/>
+
+</resources>

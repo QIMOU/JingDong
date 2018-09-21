@@ -1,1 +1,1 @@
-include ':app', ':jingdong_base_marster'
+include ':app', ':jingdong_base_marster', ':networkjudgment'

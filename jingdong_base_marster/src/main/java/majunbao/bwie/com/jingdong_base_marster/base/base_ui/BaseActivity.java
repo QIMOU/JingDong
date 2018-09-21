@@ -19,6 +19,9 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    /**
+     * 网络观察者
+     */
     private InputMethodManager imm;
     protected ImmersionBar mImmersionBar;
     private Unbinder unbinder;
@@ -26,20 +29,26 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setNetWork();
         setContentView(setLayoutId());
         //绑定控件
         unbinder = ButterKnife.bind(this);
-        //性能优化
 
         //初始化沉浸式
         if (isImmersionBarEnabled())
             initImmersionBar();
+
+
         //初始化数据
         initData();
         //view与数据绑定
         initView();
         //设置监听
         setListener();
+
+    }
+
+    protected  void setNetWork(){
 
     }
 

@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
@@ -18,10 +17,8 @@ import com.alipay.sdk.app.PayTask;
 import com.bwie.majunbao.R;
 import com.bwie.majunbao.albb.PayResult;
 import com.bwie.majunbao.contract.PayContract;
-import com.bwie.majunbao.entity.PayEntity;
 import com.bwie.majunbao.eventbus.PayEventBus;
 import com.bwie.majunbao.presenter.PayPresenter;
-import com.itheima.materialdialogs.MaterialDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -55,6 +52,7 @@ public class PayActivity extends BaseMvpActivity<PayContract.PayModel, PayContra
                 if (payResult.getResultStatus().equals("9000")) {
                     // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                     Toast.makeText(PayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(PayActivity.this,PaySuccessActivity.class));
                 } else {
                     // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                     Toast.makeText(PayActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
@@ -102,6 +100,7 @@ public class PayActivity extends BaseMvpActivity<PayContract.PayModel, PayContra
             }
         });
     }
+
 
     @Override
     protected void initData() {
